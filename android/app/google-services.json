@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "73363374617",
+    "project_id": "restinio-app",
+    "storage_bucket": "restinio-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:73363374617:android:2a5dbe522f70ded1c8a088",
+        "android_client_info": {
+          "package_name": "com.msa.restinio.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwVZY8jfm9iqwIbSwfzqiWavly4ZbV4AM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
