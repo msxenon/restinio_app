@@ -1,4 +1,4 @@
-package com.msa.restinio.app.restinio_app
+package com.msa.restinio.app
 
 import io.flutter.embedding.android.FlutterActivity
 
