@@ -66,10 +66,11 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyBiV1pKl7CS03dmdrR6bsEJ_WgBzWIdx_s',
-    appId: '1:73363374617:ios:df2d92aad908ec81c8a088',
+    appId: '1:73363374617:ios:7545dea9f468e547c8a088',
     messagingSenderId: '73363374617',
     projectId: 'restinio-app',
     storageBucket: 'restinio-app.appspot.com',
-    iosBundleId: 'com.msa.restinio.app.restinioApp',
+    iosBundleId: 'com.msa.restinio.app',
   );
+
 }

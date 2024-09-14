@@ -9,7 +9,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.msa.restinio.app.restinioApp</string>
+	<string>com.msa.restinio.app</string>
 	<key>PROJECT_ID</key>
 	<string>restinio-app</string>
 	<key>STORAGE_BUCKET</key>
@@ -25,6 +25,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:73363374617:ios:df2d92aad908ec81c8a088</string>
+	<string>1:73363374617:ios:7545dea9f468e547c8a088</string>
 </dict>
 </plist>
