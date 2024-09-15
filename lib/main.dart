@@ -33,6 +33,7 @@ class MyApp extends StatelessWidget {
         primaryColor: CupertinoColors.black,
       ),
     );
+    final router = AppRouter.instance.router;
     return MultiBlocProvider(
       providers: [
         BlocProvider<AuthenticationCubit>(
@@ -46,7 +47,9 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: CupertinoApp.router(
-        routerConfig: AppRouter.instance.router,
+        routeInformationParser: router.routeInformationParser,
+        routeInformationProvider: router.routeInformationProvider,
+        routerDelegate: router.routerDelegate,
         theme: theme,
         builder: (context, child) {
           return SkeletonizerConfig(

@@ -16,6 +16,7 @@ class AppRouter {
   final GlobalKey<NavigatorState> rootNavigatorKey =
       GlobalKey<NavigatorState>();
   static const _initialLocation = FoodScreen.path;
+  static String? _lastPathBeforeAuthentication;
 
   GoRouter _getRouter() {
     _goRouterInstance ??= GoRouter(
@@ -25,12 +26,17 @@ class AppRouter {
         final isAuthenticated = authState.data is Authenticated;
         final isCurrentPathToAuthenticationScreen =
             state.matchedLocation == AuthenticationScreen.path;
+
+        String? redirectPath;
         if (!isAuthenticated && !isCurrentPathToAuthenticationScreen) {
-          return AuthenticationScreen.path;
+          _lastPathBeforeAuthentication = state.matchedLocation;
+          redirectPath = AuthenticationScreen.path;
         } else if (isAuthenticated && isCurrentPathToAuthenticationScreen) {
-          return _initialLocation;
+          redirectPath = _lastPathBeforeAuthentication ?? _initialLocation;
+          _lastPathBeforeAuthentication = null;
         }
-        return null;
+
+        return redirectPath;
       },
       initialLocation: _initialLocation,
       routes: [
