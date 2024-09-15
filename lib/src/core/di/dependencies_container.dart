@@ -12,6 +12,9 @@ import 'package:restinio_app/src/features/authentication/domain/repositories/aut
 import 'package:restinio_app/src/features/food/data/data_sources/food_remote_data_source.dart';
 import 'package:restinio_app/src/features/food/data/repositories/food_repository_impl.dart';
 import 'package:restinio_app/src/features/food/domain/repositories/food_repository.dart';
+import 'package:restinio_app/src/features/table_reservation/data/data_sources/table_data_source.dart';
+import 'package:restinio_app/src/features/table_reservation/data/repositories/table_repository_impl.dart';
+import 'package:restinio_app/src/features/table_reservation/domain/repositories/table_repository.dart';
 
 class DependenciesContainer {
   static final _injector = GetIt.instance;
@@ -54,6 +57,10 @@ class DependenciesContainer {
       () => FoodRepositoryImpl(
         get<FoodRemoteDataSource>(),
       ),
+    );
+    _registerFactory<TableDataSource>(() => TableDataSource(fireStore));
+    _registerFactory<TableRepository>(
+      () => TableRepositoryImpl(get<TableDataSource>()),
     );
   }
 

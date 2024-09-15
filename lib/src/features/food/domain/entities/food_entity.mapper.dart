@@ -13,6 +13,7 @@ class FoodEntityMapper extends ClassMapperBase<FoodEntity> {
   static FoodEntityMapper ensureInitialized() {
     if (_instance == null) {
       MapperContainer.globals.use(_instance = FoodEntityMapper._());
+      BaseEntityMapper.ensureInitialized();
     }
     return _instance!;
   }
@@ -101,7 +102,8 @@ extension FoodEntityValueCopy<$R, $Out>
 }
 
 abstract class FoodEntityCopyWith<$R, $In extends FoodEntity, $Out>
-    implements ClassCopyWith<$R, $In, $Out> {
+    implements BaseEntityCopyWith<$R, $In, $Out> {
+  @override
   $R call(
       {String? id,
       String? name,
