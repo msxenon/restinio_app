@@ -7,9 +7,10 @@ import 'package:restinio_app/src/features/authentication/presentation/authentica
 import 'package:restinio_app/src/features/authentication/presentation/blocs/authentication_cubit.dart';
 import 'package:restinio_app/src/features/food/presentation/food_screen.dart';
 import 'package:restinio_app/src/features/home/presentation/home_screen.dart';
-import 'package:restinio_app/src/features/table_reservation/presentation/second_tab_screen.dart';
+import 'package:restinio_app/src/features/table_reservation/presentation/table_reservation_tab.dart';
 import 'package:restinio_app/src/features/table_reservation/presentation/table_reservation_screen.dart';
 import 'package:restinio_app/src/features/table_reservation/presentation/widgets/table_details_content.dart';
+import 'package:restinio_app/src/features/table_reservation/presentation/widgets/table_reservation_modal_content.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 part 'app_router.g.dart';
 
@@ -109,6 +110,7 @@ class TableTabRoute extends GoRouteData {
   path: '/table_reservation/:date',
   routes: [
     TypedGoRoute<TableDetailsRoute>(path: 'table_details/:tid'),
+    TypedGoRoute<TableReservationStep2Route>(path: 's2/:tid'),
   ],
 )
 class TableReservationRoute extends GoRouteData {
@@ -131,8 +133,25 @@ class TableDetailsRoute extends GoRouteData {
   @override
   Page<void> buildPage(BuildContext context, GoRouterState state) {
     return WoltModalPage(
+      key: state.pageKey,
       builder: (context) {
         return TableDetailsContent(tableId: tid, date: date);
+      },
+    );
+  }
+}
+
+class TableReservationStep2Route extends GoRouteData {
+  final String tid;
+  final int date;
+  TableReservationStep2Route({required this.tid, required this.date});
+
+  @override
+  Page<void> buildPage(BuildContext context, GoRouterState state) {
+    return WoltModalPage(
+      key: state.pageKey,
+      builder: (context) {
+        return TableReservationModalContent(tableId: tid, date: date);
       },
     );
   }
@@ -142,6 +161,7 @@ class WoltModalPage<T> extends Page<T> {
   final WidgetBuilder builder;
   const WoltModalPage({
     required this.builder,
+    required super.key,
   });
 
   @override

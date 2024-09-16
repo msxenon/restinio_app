@@ -14,7 +14,6 @@ class TableModelMapper extends ClassMapperBase<TableModel> {
     if (_instance == null) {
       MapperContainer.globals.use(_instance = TableModelMapper._());
       TableEntityMapper.ensureInitialized();
-      ReservationEntityMapper.ensureInitialized();
     }
     return _instance!;
   }
@@ -25,9 +24,6 @@ class TableModelMapper extends ClassMapperBase<TableModel> {
   static TableEntity _$table(TableModel v) => v.table;
   static const Field<TableModel, TableEntity> _f$table =
       Field('table', _$table);
-  static ReservationEntity? _$reservation(TableModel v) => v.reservation;
-  static const Field<TableModel, ReservationEntity> _f$reservation =
-      Field('reservation', _$reservation, opt: true);
   static TableStatus _$status(TableModel v) => v.status;
   static const Field<TableModel, TableStatus> _f$status =
       Field('status', _$status);
@@ -35,15 +31,11 @@ class TableModelMapper extends ClassMapperBase<TableModel> {
   @override
   final MappableFields<TableModel> fields = const {
     #table: _f$table,
-    #reservation: _f$reservation,
     #status: _f$status,
   };
 
   static TableModel _instantiate(DecodingData data) {
-    return TableModel(
-        table: data.dec(_f$table),
-        reservation: data.dec(_f$reservation),
-        status: data.dec(_f$status));
+    return TableModel(table: data.dec(_f$table), status: data.dec(_f$status));
   }
 
   @override
@@ -98,12 +90,7 @@ extension TableModelValueCopy<$R, $Out>
 abstract class TableModelCopyWith<$R, $In extends TableModel, $Out>
     implements ClassCopyWith<$R, $In, $Out> {
   TableEntityCopyWith<$R, TableEntity, TableEntity> get table;
-  ReservationEntityCopyWith<$R, ReservationEntity, ReservationEntity>?
-      get reservation;
-  $R call(
-      {TableEntity? table,
-      ReservationEntity? reservation,
-      TableStatus? status});
+  $R call({TableEntity? table, TableStatus? status});
   TableModelCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
 }
 
@@ -119,23 +106,14 @@ class _TableModelCopyWithImpl<$R, $Out>
   TableEntityCopyWith<$R, TableEntity, TableEntity> get table =>
       $value.table.copyWith.$chain((v) => call(table: v));
   @override
-  ReservationEntityCopyWith<$R, ReservationEntity, ReservationEntity>?
-      get reservation =>
-          $value.reservation?.copyWith.$chain((v) => call(reservation: v));
-  @override
-  $R call(
-          {TableEntity? table,
-          Object? reservation = $none,
-          TableStatus? status}) =>
+  $R call({TableEntity? table, TableStatus? status}) =>
       $apply(FieldCopyWithData({
         if (table != null) #table: table,
-        if (reservation != $none) #reservation: reservation,
         if (status != null) #status: status
       }));
   @override
   TableModel $make(CopyWithData data) => TableModel(
       table: data.get(#table, or: $value.table),
-      reservation: data.get(#reservation, or: $value.reservation),
       status: data.get(#status, or: $value.status));
 
   @override

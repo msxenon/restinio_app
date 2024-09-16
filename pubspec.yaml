@@ -19,7 +19,6 @@ dependencies:
   firebase_auth: ^5.2.1
   intl: ^0.19.0
   cached_network_image: ^3.4.1
-  # flutter_cache_manager_firebase: ^2.1.1
   flutter_cache_manager: ^3.4.1
   firebase_storage: ^12.3.0
   flutter_bloc: ^8.1.6
@@ -29,10 +28,8 @@ dependencies:
   skeletonizer: ^1.4.2
   rxdart: ^0.28.0
   collection: ^1.18.0
-  adoptive_calendar: ^0.1.9
   wolt_modal_sheet: ^0.9.3
-  uuid: ^4.5.0
-
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter

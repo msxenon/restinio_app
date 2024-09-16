@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:restinio_app/src/core/async_bloc_builder.dart';
+import 'package:restinio_app/src/core/navigation/app_router.dart';
 import 'package:restinio_app/src/features/authentication/domain/repositories/authentication_repository.dart';
 import 'package:restinio_app/src/features/table_reservation/data/models/table_model.dart';
 import 'package:restinio_app/src/features/table_reservation/domain/repositories/reservation_repository.dart';
@@ -66,7 +67,8 @@ class TableDetailsContent extends StatelessWidget {
                 CupertinoButton.filled(
                   child: const Text('Book it now'),
                   onPressed: () {
-                    context.read<TableDetailsCubit>().reserveTable('Bookie');
+                    TableReservationStep2Route(date: date, tid: tableId)
+                        .go(context);
                   },
                 ),
               if (model.status == TableStatus.reservedByCurrentUser)
@@ -78,7 +80,8 @@ class TableDetailsContent extends StatelessWidget {
                   onPressed: () {
                     context
                         .read<TableDetailsCubit>()
-                        .cancelReservation(model.reservation!.id);
+                        .cancelReservation(model.table.id);
+                    AppRouter.instance.router.pop();
                   },
                 ),
               const SizedBox(height: 16)

@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:restinio_app/src/core/navigation/app_router.dart';
+import 'package:restinio_app/src/core/utilities/extensions/date_time_extensions.dart';
 
 class SecondTabScreen extends StatefulWidget {
   const SecondTabScreen({super.key});
@@ -13,8 +13,8 @@ class SecondTabScreen extends StatefulWidget {
 }
 
 class _SecondTabScreenState extends State<SecondTabScreen> {
+  // TODO: remove DateTime.now() and replace with null
   DateTime? datetime = DateTime.now();
-  final dateTimeFormatter = DateFormat('yyyy MMM dd h:m a');
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
@@ -28,7 +28,7 @@ class _SecondTabScreenState extends State<SecondTabScreen> {
                   : 'Tap to select date and time'),
               onPressed: () => unawaited(_showDateTimePicker()),
             ),
-            if (datetime != null) Text(dateTimeFormatter.format(datetime!)),
+            if (datetime != null) Text(datetime!.toHumanReadable()),
             const SizedBox(height: 20),
             CupertinoButton.filled(
               onPressed: datetime != null

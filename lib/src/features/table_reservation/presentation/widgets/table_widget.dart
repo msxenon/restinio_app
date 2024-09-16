@@ -34,8 +34,9 @@ class TableWidget extends StatelessWidget {
         100,
       );
       final primaryColor = CupertinoTheme.of(context).primaryColor;
-      final tableOverlayColor =
-          color == primaryColor ? CupertinoColors.white : primaryColor;
+      final tableOverlayColor = color.withOpacity(1) == primaryColor
+          ? CupertinoColors.white
+          : primaryColor;
       return Container(
         margin: const EdgeInsets.all(20),
         constraints: BoxConstraints.tight(size),

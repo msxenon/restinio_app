@@ -7,7 +7,6 @@ import 'package:restinio_app/src/features/table_reservation/data/models/table_mo
 import 'package:restinio_app/src/features/table_reservation/domain/repositories/reservation_repository.dart';
 import 'package:restinio_app/src/features/table_reservation/domain/repositories/table_repository.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:collection/collection.dart';
 
 class TableDetailsCubit extends Cubit<AsyncState<TableModel?>> {
   final TableRepository _tableRepository;
@@ -42,10 +41,9 @@ class TableDetailsCubit extends Cubit<AsyncState<TableModel?>> {
           AsyncStateData(
             TableModel.fromEntity(
               table,
-              event.$2.firstWhereOrNull(
-                (element) => element.tableId == table.id,
-              ),
+              event.$2,
               _authenticationRepository.userId!,
+              _selectedDateTime,
             ),
           ),
         );
@@ -79,7 +77,8 @@ class TableDetailsCubit extends Cubit<AsyncState<TableModel?>> {
   void cancelReservation(String tableId) {
     try {
       emit(const AsyncStateLoading());
-      _reservationRepository.cancelReservation(tableId: tableId, userId: _authenticationRepository.userId!);
+      _reservationRepository.cancelReservation(
+          tableId: tableId, userId: _authenticationRepository.userId!);
     } catch (e) {
       emit(AsyncStateFailure(e.toString()));
     }

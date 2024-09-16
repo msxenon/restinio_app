@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:dart_mappable/dart_mappable.dart';
 import 'package:restinio_app/src/features/table_reservation/domain/entities/reservation_entity.dart';
 import 'package:restinio_app/src/features/table_reservation/domain/entities/table_entity.dart';
@@ -7,32 +8,63 @@ part 'table_model.mapper.dart';
 @MappableClass()
 class TableModel with TableModelMappable {
   final TableEntity table;
-  final ReservationEntity? reservation;
   final TableStatus status;
-
+  final String? bookedName;
   const TableModel({
     required this.table,
-    this.reservation,
     required this.status,
+    this.bookedName,
   });
 
   static TableModel fromEntity(
     TableEntity tableEntity,
-    ReservationEntity? reservationEntity,
+    List<ReservationEntity> allReservations,
     String currentUserId,
+    DateTime selectedDateTime,
   ) {
-    final isReserved = reservationEntity != null;
+    final onlyThisTableReservations = allReservations
+        .where((element) => element.tableId == tableEntity.id)
+        .toList();
+
+    final List<MapEntry<ReservationEntity, (DateTime, DateTime)>>
+        reservationDateRanges = onlyThisTableReservations
+            .map(
+              (e) => MapEntry(
+                e,
+                (
+                  e.createdAt.subtract(
+                    const Duration(hours: 6),
+                  ),
+                  e.createdAt.add(
+                    const Duration(hours: 6),
+                  ),
+                ),
+              ),
+            )
+            .toList();
+
+    final reservationEntity = reservationDateRanges.firstWhereOrNull(
+      (element) {
+        final startDate = element.value.$1;
+        final endDate = element.value.$2;
+
+        return selectedDateTime.isAfter(startDate) &&
+            selectedDateTime.isBefore(endDate);
+      },
+    );
+
     final isReservedByCurrentUser =
-        isReserved && reservationEntity.createdBy == currentUserId;
+        reservationEntity?.key.createdBy == currentUserId;
 
     return TableModel(
       table: tableEntity,
-      reservation: reservationEntity,
       status: isReservedByCurrentUser
           ? TableStatus.reservedByCurrentUser
-          : isReserved
+          : reservationEntity != null
               ? TableStatus.reserved
               : TableStatus.available,
+      bookedName:
+          isReservedByCurrentUser ? reservationEntity!.key.bookedName : null,
     );
   }
 }
