@@ -13,8 +13,7 @@ class SecondTabScreen extends StatefulWidget {
 }
 
 class _SecondTabScreenState extends State<SecondTabScreen> {
-  // TODO: remove DateTime.now() and replace with null
-  DateTime? datetime = DateTime.now();
+  DateTime? datetime;
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
