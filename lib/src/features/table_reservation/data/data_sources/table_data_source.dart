@@ -9,7 +9,7 @@ class TableDataSource {
   TableDataSource(FirebaseFirestore firestore)
       : _collection = firestore.collection('tables');
 
-  Stream<List<TableEntity>> getFoods() {
+  Stream<List<TableEntity>> streamAll() {
     return _collection.snapshots().transform(
       StreamTransformer.fromHandlers(
         handleData: (QuerySnapshot<Map<String, dynamic>> snapshot, sink) {
@@ -17,6 +17,17 @@ class TableDataSource {
             return TableEntity.fromMap(doc.data());
           }).toList();
           sink.add(tables);
+        },
+      ),
+    );
+  }
+
+  Stream<TableEntity?> stream(String tableId) {
+    return _collection.doc(tableId).snapshots().transform(
+      StreamTransformer.fromHandlers(
+        handleData: (DocumentSnapshot<Map<String, dynamic>> snapshot, sink) {
+          final data = snapshot.data();
+          sink.add(data != null ? TableEntity.fromMap(data) : null);
         },
       ),
     );

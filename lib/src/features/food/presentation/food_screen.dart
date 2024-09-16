@@ -7,7 +7,7 @@ import 'package:restinio_app/src/features/food/presentation/widgets/food_tile.da
 class FoodScreen extends StatelessWidget {
   const FoodScreen({super.key});
   static const _breakingPoint = 300;
-  static const String path = '/food';
+
   static final _dummyLoadingState = List<FoodEntity>.generate(
     4,
     (index) => FoodEntity(
@@ -18,6 +18,7 @@ class FoodScreen extends StatelessWidget {
       price: index.toDouble(),
     ),
   );
+
   @override
   Widget build(BuildContext context) {
     return CupertinoTabView(

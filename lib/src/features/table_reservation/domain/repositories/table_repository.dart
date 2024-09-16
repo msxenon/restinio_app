@@ -5,4 +5,6 @@ abstract class TableRepository {
   static TableRepository get instance =>
       DependenciesContainer.get<TableRepository>();
   Stream<List<TableEntity>> streamAll();
+
+  Stream<TableEntity?> stream(String tableId);
 }

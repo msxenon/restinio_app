@@ -27,6 +27,11 @@ dependencies:
   get_it: ^7.7.0
   go_router: ^14.2.7
   skeletonizer: ^1.4.2
+  rxdart: ^0.28.0
+  collection: ^1.18.0
+  adoptive_calendar: ^0.1.9
+  wolt_modal_sheet: ^0.9.3
+  uuid: ^4.5.0
 
 dev_dependencies:
   flutter_test:
@@ -34,9 +39,11 @@ dev_dependencies:
   flutter_lints: ^4.0.0
   build_runner: ^2.4.12
   dart_mappable_builder: ^4.2.3
+  go_router_builder: ^2.7.1
+  build_verify: ^3.1.0
 
 flutter:
-  uses-material-design: false
+  uses-material-design: true
 
 scripts:
   build: dart run build_runner build --delete-conflicting-outputs

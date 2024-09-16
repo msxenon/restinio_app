@@ -9,6 +9,11 @@ class TableRepositoryImpl extends TableRepository {
 
   @override
   Stream<List<TableEntity>> streamAll() {
-    return _dataSource.getFoods();
+    return _dataSource.streamAll();
+  }
+  
+  @override
+  Stream<TableEntity?> stream(String tableId) {
+     return _dataSource.stream(tableId);
   }
 }

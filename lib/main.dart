@@ -11,8 +11,6 @@ import 'package:restinio_app/src/features/authentication/presentation/blocs/auth
 import 'package:restinio_app/src/features/food/domain/repositories/food_repository.dart';
 import 'package:restinio_app/src/features/food/presentation/blocs/food_bloc.dart';
 import 'package:restinio_app/src/features/food/presentation/food_screen.dart';
-import 'package:restinio_app/src/features/table_reservation/domain/repositories/table_repository.dart';
-import 'package:restinio_app/src/features/table_reservation/presentation/blocs/tables_cubit.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 void main() async {
@@ -47,9 +45,6 @@ class MyApp extends StatelessWidget {
         BlocProvider<FoodBloc>(
           create: (context) => FoodBloc(FoodRepository.instance),
         ),
-        BlocProvider<TablesCubit>(
-          create: (context) => TablesCubit(TableRepository.instance),
-        ),
       ],
       child: CupertinoApp.router(
         routeInformationParser: router.routeInformationParser,
@@ -69,6 +64,13 @@ class MyApp extends StatelessWidget {
             child: child ?? const SizedBox(),
           );
         },
+        localizationsDelegates: const <LocalizationsDelegate<dynamic>>[
+          DefaultMaterialLocalizations.delegate,
+          DefaultCupertinoLocalizations.delegate,
+        ],
+        // supportedLocales: const <Locale>[
+        //   Locale('en', 'US'),
+        // ],
       ),
     );
   }

@@ -10,8 +10,8 @@ typedef BlocDataWidgetBuilder<S> = Widget Function(
   S state,
 );
 
-class AsyncBlocBuilder<B extends StateStreamable<AsyncState<S>>,
-    S extends Object> extends StatelessWidget {
+class AsyncBlocBuilder<B extends StateStreamable<AsyncState<S>>, S extends dynamic>
+    extends StatelessWidget {
   const AsyncBlocBuilder(
     this.dataWidgetBuilder, {
     this.errorStateWidgetBuilder,
@@ -32,6 +32,7 @@ class AsyncBlocBuilder<B extends StateStreamable<AsyncState<S>>,
           case AsyncStateLoading():
             return dummyLoadingState != null
                 ? Skeletonizer(
+                    // ignore: null_check_on_nullable_type_parameter
                     child: dataWidgetBuilder(context, dummyLoadingState!),
                   )
                 : const Center(child: CupertinoActivityIndicator());

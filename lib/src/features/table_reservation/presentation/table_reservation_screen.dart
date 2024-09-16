@@ -1,30 +1,51 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:restinio_app/src/core/async_bloc_builder.dart';
-import 'package:restinio_app/src/features/table_reservation/domain/entities/table_entity.dart';
-import 'package:restinio_app/src/features/table_reservation/presentation/blocs/tables_cubit.dart';
-import 'package:restinio_app/src/features/table_reservation/presentation/widgets/table_widget.dart';
+import 'package:restinio_app/src/core/navigation/app_router.dart';
+import 'package:restinio_app/src/features/authentication/domain/repositories/authentication_repository.dart';
+import 'package:restinio_app/src/features/table_reservation/data/models/table_model.dart';
+import 'package:restinio_app/src/features/table_reservation/domain/repositories/reservation_repository.dart';
+import 'package:restinio_app/src/features/table_reservation/domain/repositories/table_repository.dart';
+import 'package:restinio_app/src/features/table_reservation/presentation/blocs/tables_screen_cubit.dart';
+import 'package:restinio_app/src/features/table_reservation/presentation/widgets/table_button.dart';
 
 class TableReservationScreen extends StatelessWidget {
-  const TableReservationScreen({super.key});
-  static const path = '/table_reservation';
+  const TableReservationScreen(this.selectedDateTime, {super.key});
+  final DateTime selectedDateTime;
+
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
-      navigationBar: CupertinoNavigationBar(
+      navigationBar: const CupertinoNavigationBar(
         middle: Text('Table Reservation'),
       ),
       child: SafeArea(
-        child:
-            AsyncBlocBuilder<TablesCubit, List<TableEntity>>((context, state) {
-          return Wrap(
-            children: List.generate(
-              state.length,
-              (index) {
-                return TableWidget(state[index]);
-              },
-            ),
-          );
-        }),
+        child: BlocProvider<TablesCubit>(
+          create: (context) => TablesCubit(
+            TableRepository.instance,
+            ReservationRepository.instance,
+            AuthenticationRepository.instance,
+            selectedDateTime,
+          ),
+          child: AsyncBlocBuilder<TablesCubit, List<TableModel>>(
+            (context, state) {
+              return Wrap(
+                children: List.generate(
+                  state.length,
+                  (index) {
+                    final tableModel = state[index];
+                    return CustomPaintButton(tableModel, onTap: () {
+                      TableDetailsRoute(
+                        date: selectedDateTime.millisecondsSinceEpoch,
+                        tid: tableModel.table.id,
+                      ).go(context);
+                    });
+                  },
+                ),
+              );
+            },
+          ),
+        ),
       ),
     );
   }

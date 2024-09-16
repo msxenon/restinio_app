@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -6,7 +7,11 @@ import 'package:restinio_app/src/features/authentication/presentation/authentica
 import 'package:restinio_app/src/features/authentication/presentation/blocs/authentication_cubit.dart';
 import 'package:restinio_app/src/features/food/presentation/food_screen.dart';
 import 'package:restinio_app/src/features/home/presentation/home_screen.dart';
+import 'package:restinio_app/src/features/table_reservation/presentation/second_tab_screen.dart';
 import 'package:restinio_app/src/features/table_reservation/presentation/table_reservation_screen.dart';
+import 'package:restinio_app/src/features/table_reservation/presentation/widgets/table_details_content.dart';
+import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
+part 'app_router.g.dart';
 
 class AppRouter {
   static AppRouter get instance => DependenciesContainer.get<AppRouter>();
@@ -15,22 +20,24 @@ class AppRouter {
 
   final GlobalKey<NavigatorState> rootNavigatorKey =
       GlobalKey<NavigatorState>();
-  static const _initialLocation = FoodScreen.path;
-  static String? _lastPathBeforeAuthentication;
-
+  String? _lastPathBeforeAuthentication;
+  final String _initialLocation = FoodTabRoute().location;
+  final String _authenticationPath = AuthenticationRoute().location;
   GoRouter _getRouter() {
     _goRouterInstance ??= GoRouter(
       navigatorKey: rootNavigatorKey,
+      routes: $appRoutes,
+      initialLocation: _initialLocation,
       redirect: (BuildContext context, GoRouterState state) async {
         final authState = context.read<AuthenticationCubit>().state;
         final isAuthenticated = authState.data is Authenticated;
         final isCurrentPathToAuthenticationScreen =
-            state.matchedLocation == AuthenticationScreen.path;
+            state.matchedLocation == _authenticationPath;
 
         String? redirectPath;
         if (!isAuthenticated && !isCurrentPathToAuthenticationScreen) {
           _lastPathBeforeAuthentication = state.matchedLocation;
-          redirectPath = AuthenticationScreen.path;
+          redirectPath = _authenticationPath;
         } else if (isAuthenticated && isCurrentPathToAuthenticationScreen) {
           redirectPath = _lastPathBeforeAuthentication ?? _initialLocation;
           _lastPathBeforeAuthentication = null;
@@ -38,42 +45,121 @@ class AppRouter {
 
         return redirectPath;
       },
-      initialLocation: _initialLocation,
-      routes: [
-        GoRoute(
-          name: AuthenticationScreen.path,
-          path: AuthenticationScreen.path,
-          builder: (_, __) => const AuthenticationScreen(),
-        ),
-        StatefulShellRoute.indexedStack(
-          builder: (context, state, navigationShell) {
-            return HomeScreen(
-              navigationShell,
-              key: Key(state.uri.toString()),
-            );
-          },
-          branches: [
-            StatefulShellBranch(
-              routes: [
-                GoRoute(
-                  name: FoodScreen.path,
-                  path: FoodScreen.path,
-                  builder: (context, state) => const FoodScreen(),
-                ),
-              ],
-            ),
-            StatefulShellBranch(routes: <RouteBase>[
-              GoRoute(
-                name: TableReservationScreen.path,
-                path: TableReservationScreen.path,
-                builder: (context, state) => const TableReservationScreen(),
-              ),
-            ])
-          ],
-        ),
-      ],
     );
-
     return _goRouterInstance!;
+  }
+}
+
+@TypedGoRoute<AuthenticationRoute>(
+  path: '/auth',
+)
+class AuthenticationRoute extends GoRouteData {
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      const AuthenticationScreen();
+}
+
+@TypedStatefulShellRoute<HomeShellRoute>(
+  branches: <TypedStatefulShellBranch<StatefulShellBranchData>>[
+    TypedStatefulShellBranch<TabsData>(
+      routes: <TypedRoute<RouteData>>[
+        TypedGoRoute<FoodTabRoute>(path: '/'),
+      ],
+    ),
+    TypedStatefulShellBranch<TabsData>(
+      routes: <TypedRoute<RouteData>>[
+        TypedGoRoute<TableTabRoute>(path: '/tables'),
+      ],
+    ),
+  ],
+)
+class HomeShellRoute extends StatefulShellRouteData {
+  const HomeShellRoute();
+
+  @override
+  Widget builder(
+    BuildContext context,
+    GoRouterState state,
+    StatefulNavigationShell navigationShell,
+  ) {
+    return HomeScreen(
+      navigationShell,
+      key: Key(state.uri.toString()),
+    );
+  }
+}
+
+class TabsData extends StatefulShellBranchData {}
+
+class FoodTabRoute extends GoRouteData {
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const FoodScreen();
+  }
+}
+
+class TableTabRoute extends GoRouteData {
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const SecondTabScreen();
+  }
+}
+
+@TypedGoRoute<TableReservationRoute>(
+  path: '/table_reservation/:date',
+  routes: [
+    TypedGoRoute<TableDetailsRoute>(path: 'table_details/:tid'),
+  ],
+)
+class TableReservationRoute extends GoRouteData {
+  final String date;
+
+  TableReservationRoute({required this.date});
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    final milliseconds = int.parse((state.pathParameters['date'] as String));
+    final selectedDateTime = DateTime.fromMillisecondsSinceEpoch(milliseconds);
+    return TableReservationScreen(selectedDateTime);
+  }
+}
+
+class TableDetailsRoute extends GoRouteData {
+  final String tid;
+  final int date;
+  TableDetailsRoute({required this.tid, required this.date});
+
+  @override
+  Page<void> buildPage(BuildContext context, GoRouterState state) {
+    return WoltModalPage(
+      builder: (context) {
+        return TableDetailsContent(tableId: tid, date: date);
+      },
+    );
+  }
+}
+
+class WoltModalPage<T> extends Page<T> {
+  final WidgetBuilder builder;
+  const WoltModalPage({
+    required this.builder,
+  });
+
+  @override
+  Route<T> createRoute(BuildContext context) {
+    return WoltModalSheetRoute(
+      settings: this,
+      pageListBuilderNotifier: ValueNotifier((context) {
+        return [
+          SliverWoltModalSheetPage(
+            hasTopBarLayer: false,
+            mainContentSliversBuilder: (context) => [
+              SliverToBoxAdapter(
+                child: builder(context),
+              ),
+            ],
+          )
+        ];
+      }),
+    );
   }
 }

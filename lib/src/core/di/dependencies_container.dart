@@ -12,8 +12,11 @@ import 'package:restinio_app/src/features/authentication/domain/repositories/aut
 import 'package:restinio_app/src/features/food/data/data_sources/food_remote_data_source.dart';
 import 'package:restinio_app/src/features/food/data/repositories/food_repository_impl.dart';
 import 'package:restinio_app/src/features/food/domain/repositories/food_repository.dart';
+import 'package:restinio_app/src/features/table_reservation/data/data_sources/reservation_data_source.dart';
 import 'package:restinio_app/src/features/table_reservation/data/data_sources/table_data_source.dart';
+import 'package:restinio_app/src/features/table_reservation/data/repositories/reservation_repository_impl.dart';
 import 'package:restinio_app/src/features/table_reservation/data/repositories/table_repository_impl.dart';
+import 'package:restinio_app/src/features/table_reservation/domain/repositories/reservation_repository.dart';
 import 'package:restinio_app/src/features/table_reservation/domain/repositories/table_repository.dart';
 
 class DependenciesContainer {
@@ -38,6 +41,7 @@ class DependenciesContainer {
     final firebaseAuth = FirebaseAuth.instanceFor(app: firebaseApp);
     final fireStore = FirebaseFirestore.instanceFor(app: firebaseApp);
     final firebaseStorage = FirebaseStorage.instanceFor(app: firebaseApp);
+
     _registerSingleton<AuthenticationRepository>(
       AuthenticationRepositoryImpl(firebaseAuth),
     );
@@ -62,10 +66,17 @@ class DependenciesContainer {
     _registerFactory<TableRepository>(
       () => TableRepositoryImpl(get<TableDataSource>()),
     );
+    _registerFactory<ReservationDataSource>(
+        () => ReservationDataSource(fireStore));
+    _registerFactory<ReservationRepository>(
+      () => ReservationRepositoryImpl(get<ReservationDataSource>()),
+    );
   }
 
-  static Future<FirebaseApp> _initFirebaseApp() async {
-    final options = DefaultFirebaseOptions.currentPlatform;
-    return Firebase.initializeApp(options: options, name: 'restinio_app');
+  static Future<FirebaseApp> _initFirebaseApp() {
+    return Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+      name: 'restinio_app',
+    );
   }
 }

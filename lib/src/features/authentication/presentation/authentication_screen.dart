@@ -5,7 +5,6 @@ import 'package:restinio_app/src/features/authentication/presentation/blocs/auth
 
 class AuthenticationScreen extends StatefulWidget {
   const AuthenticationScreen({super.key});
-  static const String path = '/authentication_screen';
 
   @override
   State<AuthenticationScreen> createState() => _AuthenticationScreenState();

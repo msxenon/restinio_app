@@ -1,15 +1,19 @@
 import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
-import 'package:restinio_app/src/features/table_reservation/domain/entities/table_entity.dart';
+import 'package:restinio_app/src/features/table_reservation/data/models/table_model.dart';
 
 class TableWidget extends StatelessWidget {
   static const double tableMargin = 11.0;
   static const double mainAxisPadding = 11.0;
-  final TableEntity table;
+  final TableModel tableModel;
+  final Color color;
+  final bool skipOverlays;
   const TableWidget(
-    this.table, {
+    this.tableModel,
+    this.color, {
     super.key,
+    this.skipOverlays = false,
   });
 
   @override
@@ -18,7 +22,7 @@ class TableWidget extends StatelessWidget {
       final screenWidth = constraints.maxWidth;
       const height = 100.0;
       const chairPaintLength = height - (tableMargin * 2) - mainAxisPadding;
-      final seatsPerSide = max(1, (table.seats - 2) ~/ 2);
+      final seatsPerSide = max(1, (tableModel.table.seats - 2) ~/ 2);
 
       final (width, safeSeatsPerSide) = getSafeWidthAndSeatsNumber(
         seatsPerSide: seatsPerSide,
@@ -29,6 +33,9 @@ class TableWidget extends StatelessWidget {
         width,
         100,
       );
+      final primaryColor = CupertinoTheme.of(context).primaryColor;
+      final tableOverlayColor =
+          color == primaryColor ? CupertinoColors.white : primaryColor;
       return Container(
         margin: const EdgeInsets.all(20),
         constraints: BoxConstraints.tight(size),
@@ -43,26 +50,37 @@ class TableWidget extends StatelessWidget {
                 mainAxisPadding: mainAxisPadding,
                 chairLength: chairPaintLength,
                 chairMargin: 2,
-                color: const Color(0xffEBEFF3),
+                color: color,
               ),
               size: size,
             ),
-            RichText(
-              textAlign: TextAlign.center,
-              text: TextSpan(
-                children: [
-                  TextSpan(text: table.tag),
-                  if (safeSeatsPerSide != seatsPerSide)
-                    TextSpan(
-                      text: '\n\n(${table.seats} seats)',
-                      style: TextStyle(
-                        fontSize: 10,
-                        color: CupertinoTheme.of(context).primaryColor,
-                      ),
-                    )
-                ],
+            if (!skipOverlays)
+              Text(
+                '#${tableModel.table.tag}',
+                style: TextStyle(
+                  color: tableOverlayColor,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),
               ),
-            ),
+            if (!skipOverlays && safeSeatsPerSide != seatsPerSide)
+              Positioned(
+                bottom: tableMargin * 1.5,
+                right: tableMargin * 1.5,
+                child: Text(
+                  '${tableModel.table.seats} seats',
+                  style: TextStyle(fontSize: 10, color: tableOverlayColor),
+                ),
+              ),
+            if (!skipOverlays && tableModel.status.isReservedByCurrentUser)
+              Positioned(
+                top: tableMargin * 1.5,
+                right: tableMargin * 1.5,
+                child: Icon(
+                  CupertinoIcons.checkmark_seal,
+                  color: tableOverlayColor,
+                ),
+              ),
           ],
         ),
       );
