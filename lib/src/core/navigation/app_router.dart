@@ -11,6 +11,10 @@ class AppRouter {
   GoRouter? _goRouterInstance;
   GoRouter get router => _getRouter();
 
+  void refresh() {
+    router.refresh();
+  }
+
   final GlobalKey<NavigatorState> rootNavigatorKey =
       GlobalKey<NavigatorState>();
   String? _lastPathBeforeAuthentication;
@@ -35,7 +39,8 @@ class AppRouter {
           _lastPathBeforeAuthentication = state.matchedLocation;
           newRedirectionPath = _authenticationPath;
         } else if (isAuthenticated && isCurrentPathToAuthenticationScreen) {
-          newRedirectionPath = _lastPathBeforeAuthentication ?? _initialLocation;
+          newRedirectionPath =
+              _lastPathBeforeAuthentication ?? _initialLocation;
           _lastPathBeforeAuthentication = null;
         }
 

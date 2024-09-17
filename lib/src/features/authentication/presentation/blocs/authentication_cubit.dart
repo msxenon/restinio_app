@@ -29,7 +29,7 @@ class AuthenticationCubit extends Cubit<AsyncState<AuthenticationState>> {
       newState = AsyncStateFailure(e.toString());
     } finally {
       emit(newState ?? const AsyncStateFailure('Unknown error'));
-      _appRouter.router.refresh();
+      _appRouter.refresh();
     }
   }
 }
