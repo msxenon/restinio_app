@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:restinio_app/src/core/di/dependencies_container.dart';
 import 'package:restinio_app/src/core/navigation/routes.dart';
+import 'package:restinio_app/src/core/presentation/on_error_screen.dart';
 import 'package:restinio_app/src/features/authentication/presentation/blocs/authentication_cubit.dart';
 
 class AppRouter {
@@ -20,6 +21,9 @@ class AppRouter {
       navigatorKey: rootNavigatorKey,
       routes: $appRoutes,
       initialLocation: _initialLocation,
+      errorBuilder: (context, state) {
+        return const OnErrorScreen();
+      },
       redirect: (BuildContext context, GoRouterState state) async {
         final authState = context.read<AuthenticationCubit>().state;
         final isAuthenticated = authState.data is Authenticated;
