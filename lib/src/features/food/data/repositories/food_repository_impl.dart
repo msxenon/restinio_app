@@ -7,7 +7,12 @@ class FoodRepositoryImpl extends FoodRepository {
 
   FoodRepositoryImpl(this._foodRemoteDataSource);
   @override
-  Future<List<FoodEntity>> getFoods() {
-    return _foodRemoteDataSource.getFoods();
+  Future<List<FoodEntity>> getAll() {
+    return _foodRemoteDataSource.getAll();
+  }
+
+  @override
+  Future<FoodEntity?> get(String foodId) {
+    return _foodRemoteDataSource.get(foodId);
   }
 }

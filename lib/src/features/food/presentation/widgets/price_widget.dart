@@ -11,24 +11,18 @@ class PriceWidget extends StatelessWidget {
     final int wholeNumber = price.toInt();
     final decimalNumber = _numberFormat.format((price - wholeNumber) * 100);
     return RichText(
-        text: TextSpan(
-      children: [
-        TextSpan(
-          text: "€$wholeNumber",
-          style: TextStyle(
-            color: CupertinoTheme.of(context).primaryColor,
-            fontWeight: FontWeight.bold,
+      text: TextSpan(
+        children: [
+          TextSpan(
+            text: "€$wholeNumber",
+            style: CupertinoTheme.of(context).textTheme.navTitleTextStyle,
           ),
-        ),
-        TextSpan(
-          text: ".$decimalNumber",
-          style: TextStyle(
-            color: CupertinoTheme.of(context).primaryColor,
-            fontWeight: FontWeight.w400,
-            fontSize: 10,
+          TextSpan(
+            text: ".$decimalNumber",
+            style: CupertinoTheme.of(context).textTheme.tabLabelTextStyle,
           ),
-        ),
-      ],
-    ));
+        ],
+      ),
+    );
   }
 }

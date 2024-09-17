@@ -73,7 +73,7 @@ class _TableReservationModalContentState
                 ),
                 const SizedBox(height: 16),
                 CupertinoButton.filled(
-                  child: const Text('Book'),
+                  child: const Text('Confirm Reservation'),
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
                       unawaited(_reserveTable(context, model));

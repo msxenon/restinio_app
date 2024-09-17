@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:restinio_app/src/core/async_bloc_builder.dart';
+import 'package:restinio_app/src/core/navigation/routes.dart';
 import 'package:restinio_app/src/features/food/domain/entities/food_entity.dart';
 import 'package:restinio_app/src/features/food/presentation/blocs/food_bloc.dart';
 import 'package:restinio_app/src/features/food/presentation/widgets/food_tile.dart';
@@ -46,7 +47,11 @@ class FoodScreen extends StatelessWidget {
                     itemCount: snapshot.length,
                     itemBuilder: (context, index) {
                       final food = snapshot[index];
-                      return FoodTile(food);
+                      return FoodTile(
+                        food,
+                        onTap: () =>
+                            FoodDetailsRoute(foodId: food.id).push(context),
+                      );
                     },
                   );
                 });

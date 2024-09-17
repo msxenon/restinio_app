@@ -9,7 +9,8 @@ class TableReservationScreenStep1 extends StatefulWidget {
   const TableReservationScreenStep1({super.key});
 
   @override
-  State<TableReservationScreenStep1> createState() => _TableReservationScreenStep1();
+  State<TableReservationScreenStep1> createState() =>
+      _TableReservationScreenStep1();
 }
 
 class _TableReservationScreenStep1 extends State<TableReservationScreenStep1> {
@@ -35,7 +36,7 @@ class _TableReservationScreenStep1 extends State<TableReservationScreenStep1> {
                           date: datetime!.millisecondsSinceEpoch.toString())
                       .go(context)
                   : null,
-              child: const Text('Reserve a table now!'),
+              child: const Text('Reserve'),
             ),
           ],
         ),

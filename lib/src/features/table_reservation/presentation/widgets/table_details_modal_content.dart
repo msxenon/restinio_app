@@ -69,7 +69,7 @@ class TableDetailsModalContent extends StatelessWidget {
               if (model.status == TableStatus.available)
                 CupertinoButton.filled(
                   onPressed: onNavigateToReservation,
-                  child: const Text('Book it now'),
+                  child: const Text('Reserve Table'),
                 ),
               if (model.status == TableStatus.reservedByCurrentUser)
                 CupertinoButton(

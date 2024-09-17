@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:restinio_app/src/core/navigation/app_router.dart';
 import 'package:restinio_app/src/core/navigation/wolt_modal_page.dart';
 import 'package:restinio_app/src/features/authentication/presentation/authentication_screen.dart';
+import 'package:restinio_app/src/features/food/presentation/food_details_screen.dart';
 import 'package:restinio_app/src/features/food/presentation/food_screen.dart';
 import 'package:restinio_app/src/features/home/presentation/home_screen.dart';
 import 'package:restinio_app/src/features/table_reservation/presentation/table_reservation_screen_step_1.dart';
@@ -58,6 +59,17 @@ class FirstTabRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) {
     return const FoodScreen();
+  }
+}
+
+@TypedGoRoute<FoodDetailsRoute>(path: '/fd/:foodId')
+class FoodDetailsRoute extends GoRouteData {
+  final String foodId;
+
+  FoodDetailsRoute({required this.foodId});
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return FoodDetailsScreen(foodId);
   }
 }
 

@@ -9,6 +9,7 @@ part of 'routes.dart';
 List<RouteBase> get $appRoutes => [
       $authenticationRoute,
       $homeShellRoute,
+      $foodDetailsRoute,
       $tableReservationStep2Route,
     ];
 
@@ -84,6 +85,30 @@ extension $SecondTabRouteExtension on SecondTabRoute {
 
   String get location => GoRouteData.$location(
         '/tables',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $foodDetailsRoute => GoRouteData.$route(
+      path: '/fd/:foodId',
+      factory: $FoodDetailsRouteExtension._fromState,
+    );
+
+extension $FoodDetailsRouteExtension on FoodDetailsRoute {
+  static FoodDetailsRoute _fromState(GoRouterState state) => FoodDetailsRoute(
+        foodId: state.pathParameters['foodId']!,
+      );
+
+  String get location => GoRouteData.$location(
+        '/fd/${Uri.encodeComponent(foodId)}',
       );
 
   void go(BuildContext context) => context.go(location);

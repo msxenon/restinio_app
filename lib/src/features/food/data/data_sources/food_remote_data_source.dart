@@ -7,10 +7,18 @@ class FoodRemoteDataSource {
   FoodRemoteDataSource(FirebaseFirestore firestore)
       : _foodCollection = firestore.collection('food_collection');
 
-  Future<List<FoodEntity>> getFoods() async {
+  Future<List<FoodEntity>> getAll() async {
     final snapshot = await _foodCollection.get();
     return snapshot.docs.map((doc) {
       return FoodEntity.fromMap(doc.data());
     }).toList();
+  }
+
+  Future<FoodEntity?> get(String foodId) async {
+    final doc = await _foodCollection.doc(foodId).get();
+    if (doc.exists) {
+      return FoodEntity.fromMap(doc.data()!);
+    }
+    return null;
   }
 }
