@@ -30,16 +30,16 @@ class AppRouter {
         final isCurrentPathToAuthenticationScreen =
             state.matchedLocation == _authenticationPath;
 
-        String? redirectPath;
+        String? newRedirectionPath;
         if (!isAuthenticated && !isCurrentPathToAuthenticationScreen) {
           _lastPathBeforeAuthentication = state.matchedLocation;
-          redirectPath = _authenticationPath;
+          newRedirectionPath = _authenticationPath;
         } else if (isAuthenticated && isCurrentPathToAuthenticationScreen) {
-          redirectPath = _lastPathBeforeAuthentication ?? _initialLocation;
+          newRedirectionPath = _lastPathBeforeAuthentication ?? _initialLocation;
           _lastPathBeforeAuthentication = null;
         }
 
-        return redirectPath;
+        return newRedirectionPath;
       },
     );
     return _goRouterInstance!;
