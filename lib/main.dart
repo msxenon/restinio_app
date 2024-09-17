@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:go_router/go_router.dart';
+import 'package:restinio_app/src/core/constants/app_colors.dart';
 import 'package:restinio_app/src/core/di/dependencies_container.dart';
 import 'package:restinio_app/src/core/navigation/app_router.dart';
 import 'package:restinio_app/src/features/authentication/domain/repositories/authentication_repository.dart';
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     const theme = CupertinoThemeData(
       brightness: Brightness.light,
-      primaryColor: Color(0xff50AE5A),
+      primaryColor: AppColors.primaryColor,
       textTheme: CupertinoTextThemeData(
         primaryColor: CupertinoColors.black,
       ),

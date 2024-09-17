@@ -43,7 +43,7 @@ class FoodScreen extends StatelessWidget {
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: crossAxsCount,
                         mainAxisSpacing: 16.0,
-                        mainAxisExtent: 420,
+                        mainAxisExtent: 300,
                         crossAxisSpacing: 16.0,
                       ),
                       itemCount: snapshot.length,
