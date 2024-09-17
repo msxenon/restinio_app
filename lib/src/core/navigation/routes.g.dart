@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'app_router.dart';
+part of 'routes.dart';
 
 // **************************************************************************
 // GoRouterGenerator
@@ -9,7 +9,7 @@ part of 'app_router.dart';
 List<RouteBase> get $appRoutes => [
       $authenticationRoute,
       $homeShellRoute,
-      $tableReservationRoute,
+      $tableReservationStep2Route,
     ];
 
 RouteBase get $authenticationRoute => GoRouteData.$route(
@@ -42,7 +42,7 @@ RouteBase get $homeShellRoute => StatefulShellRouteData.$route(
           routes: [
             GoRouteData.$route(
               path: '/',
-              factory: $FoodTabRouteExtension._fromState,
+              factory: $FirstTabRouteExtension._fromState,
             ),
           ],
         ),
@@ -50,7 +50,7 @@ RouteBase get $homeShellRoute => StatefulShellRouteData.$route(
           routes: [
             GoRouteData.$route(
               path: '/tables',
-              factory: $TableTabRouteExtension._fromState,
+              factory: $SecondTabRouteExtension._fromState,
             ),
           ],
         ),
@@ -62,8 +62,8 @@ extension $HomeShellRouteExtension on HomeShellRoute {
       const HomeShellRoute();
 }
 
-extension $FoodTabRouteExtension on FoodTabRoute {
-  static FoodTabRoute _fromState(GoRouterState state) => FoodTabRoute();
+extension $FirstTabRouteExtension on FirstTabRoute {
+  static FirstTabRoute _fromState(GoRouterState state) => FirstTabRoute();
 
   String get location => GoRouteData.$location(
         '/',
@@ -79,8 +79,8 @@ extension $FoodTabRouteExtension on FoodTabRoute {
   void replace(BuildContext context) => context.replace(location);
 }
 
-extension $TableTabRouteExtension on TableTabRoute {
-  static TableTabRoute _fromState(GoRouterState state) => TableTabRoute();
+extension $SecondTabRouteExtension on SecondTabRoute {
+  static SecondTabRoute _fromState(GoRouterState state) => SecondTabRoute();
 
   String get location => GoRouteData.$location(
         '/tables',
@@ -96,25 +96,25 @@ extension $TableTabRouteExtension on TableTabRoute {
   void replace(BuildContext context) => context.replace(location);
 }
 
-RouteBase get $tableReservationRoute => GoRouteData.$route(
-      path: '/table_reservation/:date',
-      factory: $TableReservationRouteExtension._fromState,
+RouteBase get $tableReservationStep2Route => GoRouteData.$route(
+      path: '/tr/:date',
+      factory: $TableReservationStep2RouteExtension._fromState,
       routes: [
         GoRouteData.$route(
-          path: 'table_details/:tableId',
-          factory: $TableDetailsRouteExtension._fromState,
+          path: 'td/:tableId',
+          factory: $TableReservationStep3RouteExtension._fromState,
         ),
       ],
     );
 
-extension $TableReservationRouteExtension on TableReservationRoute {
-  static TableReservationRoute _fromState(GoRouterState state) =>
-      TableReservationRoute(
+extension $TableReservationStep2RouteExtension on TableReservationStep2Route {
+  static TableReservationStep2Route _fromState(GoRouterState state) =>
+      TableReservationStep2Route(
         date: state.pathParameters['date']!,
       );
 
   String get location => GoRouteData.$location(
-        '/table_reservation/${Uri.encodeComponent(date)}',
+        '/tr/${Uri.encodeComponent(date)}',
       );
 
   void go(BuildContext context) => context.go(location);
@@ -127,14 +127,15 @@ extension $TableReservationRouteExtension on TableReservationRoute {
   void replace(BuildContext context) => context.replace(location);
 }
 
-extension $TableDetailsRouteExtension on TableDetailsRoute {
-  static TableDetailsRoute _fromState(GoRouterState state) => TableDetailsRoute(
+extension $TableReservationStep3RouteExtension on TableReservationStep3Route {
+  static TableReservationStep3Route _fromState(GoRouterState state) =>
+      TableReservationStep3Route(
         tableId: state.pathParameters['tableId']!,
         date: int.parse(state.pathParameters['date']!),
       );
 
   String get location => GoRouteData.$location(
-        '/table_reservation/${Uri.encodeComponent(date.toString())}/table_details/${Uri.encodeComponent(tableId)}',
+        '/tr/${Uri.encodeComponent(date.toString())}/td/${Uri.encodeComponent(tableId)}',
       );
 
   void go(BuildContext context) => context.go(location);

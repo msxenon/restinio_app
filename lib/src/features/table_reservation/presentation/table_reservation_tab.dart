@@ -2,17 +2,17 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:restinio_app/src/core/navigation/app_router.dart';
+import 'package:restinio_app/src/core/navigation/routes.dart';
 import 'package:restinio_app/src/core/utilities/extensions/date_time_extensions.dart';
 
-class SecondTabScreen extends StatefulWidget {
-  const SecondTabScreen({super.key});
+class TableReservationScreenStep1 extends StatefulWidget {
+  const TableReservationScreenStep1({super.key});
 
   @override
-  State<SecondTabScreen> createState() => _SecondTabScreenState();
+  State<TableReservationScreenStep1> createState() => _TableReservationScreenStep1();
 }
 
-class _SecondTabScreenState extends State<SecondTabScreen> {
+class _TableReservationScreenStep1 extends State<TableReservationScreenStep1> {
   DateTime? datetime;
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,7 @@ class _SecondTabScreenState extends State<SecondTabScreen> {
             const SizedBox(height: 20),
             CupertinoButton.filled(
               onPressed: datetime != null
-                  ? () => TableReservationRoute(
+                  ? () => TableReservationStep2Route(
                           date: datetime!.millisecondsSinceEpoch.toString())
                       .go(context)
                   : null,

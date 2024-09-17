@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:restinio_app/src/core/navigation/app_router.dart';
+ import 'package:restinio_app/src/core/navigation/routes.dart';
 
 class OnErrorScreen extends StatelessWidget {
   const OnErrorScreen({super.key});
@@ -17,7 +17,7 @@ class OnErrorScreen extends StatelessWidget {
             const SizedBox(height: 20),
             CupertinoButton(
               onPressed: () {
-                FoodTabRoute().go(context);
+                FirstTabRoute().go(context);
               },
               child: const Text('Home'),
             ),
