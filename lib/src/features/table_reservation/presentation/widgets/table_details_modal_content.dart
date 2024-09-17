@@ -10,8 +10,8 @@ import 'package:restinio_app/src/features/table_reservation/domain/repositories/
 import 'package:restinio_app/src/features/table_reservation/presentation/blocs/table_details_cubit.dart';
 import 'package:restinio_app/src/features/table_reservation/presentation/widgets/table_widget.dart';
 
-class TableDetailsContent extends StatelessWidget {
-  const TableDetailsContent({
+class TableDetailsModalContent extends StatelessWidget {
+  const TableDetailsModalContent({
     super.key,
     required this.date,
     required this.tableId,

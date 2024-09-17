@@ -5,9 +5,9 @@ import 'package:restinio_app/src/core/navigation/wolt_modal_page.dart';
 import 'package:restinio_app/src/features/authentication/presentation/authentication_screen.dart';
 import 'package:restinio_app/src/features/food/presentation/food_screen.dart';
 import 'package:restinio_app/src/features/home/presentation/home_screen.dart';
-import 'package:restinio_app/src/features/table_reservation/presentation/table_reservation_tab.dart';
-import 'package:restinio_app/src/features/table_reservation/presentation/table_reservation_screen.dart';
-import 'package:restinio_app/src/features/table_reservation/presentation/widgets/table_details_content.dart';
+import 'package:restinio_app/src/features/table_reservation/presentation/table_reservation_screen_step_1.dart';
+import 'package:restinio_app/src/features/table_reservation/presentation/table_reservation_screen_step_2.dart';
+import 'package:restinio_app/src/features/table_reservation/presentation/widgets/table_details_modal_content.dart';
 import 'package:restinio_app/src/features/table_reservation/presentation/widgets/table_reservation_modal_content.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
@@ -107,7 +107,7 @@ class TableReservationStep3Route extends GoRouteData {
               ),
               mainContentSliversBuilder: (context) => [
                 SliverToBoxAdapter(
-                  child: TableDetailsContent(
+                  child: TableDetailsModalContent(
                     tableId: tableId,
                     date: date,
                     onNavigateToReservation: () =>
