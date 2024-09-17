@@ -15,4 +15,11 @@ extension DateTimeExtensions on DateTime {
     final timeString = DateFormat('HH:mm').format(this);
     return '$day at $timeString';
   }
+
+  DateTime toTheClosestHourAfter(Duration duration) {
+    final time = add(duration);
+    final minutes = time.minute;
+    final minutesToClosestHour = minutes >= 30 ? 60 - minutes : -minutes;
+    return time.add(Duration(minutes: minutesToClosestHour));
+  }
 }

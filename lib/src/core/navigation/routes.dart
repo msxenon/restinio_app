@@ -32,7 +32,18 @@ class AuthenticationRoute extends GoRouteData {
     ),
     TypedStatefulShellBranch<TabsData>(
       routes: <TypedRoute<RouteData>>[
-        TypedGoRoute<SecondTabRoute>(path: '/tables'),
+        TypedGoRoute<SecondTabRoute>(
+          path: '/table_reservations',
+          routes: [
+            TypedGoRoute<TableReservationStep2Route>(
+              path: 's2/:date',
+              routes: [
+                TypedGoRoute<TableReservationStep3Route>(
+                    path: 's3/:tableId', name: 'xxxx'),
+              ],
+            ),
+          ],
+        ),
       ],
     ),
   ],
@@ -80,12 +91,6 @@ class SecondTabRoute extends GoRouteData {
   }
 }
 
-@TypedGoRoute<TableReservationStep2Route>(
-  path: '/tr/:date',
-  routes: [
-    TypedGoRoute<TableReservationStep3Route>(path: 'td/:tableId'),
-  ],
-)
 class TableReservationStep2Route extends GoRouteData {
   final String date;
 

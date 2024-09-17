@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:restinio_app/src/core/constants.dart';
 import 'package:restinio_app/src/features/table_reservation/domain/entities/reservation_entity.dart';
 
 class ReservationDataSource {
@@ -9,7 +10,6 @@ class ReservationDataSource {
   ReservationDataSource(FirebaseFirestore firestore)
       : _collection = firestore.collection('reservations_collection');
 
-  static const _totalReservationDuration = Duration(hours: 6);
 
   final _createdAtKey =
       ReservationEntityMapper.ensureInitialized().fields[#createdAt]!.key;
@@ -22,8 +22,8 @@ class ReservationDataSource {
     DateTime selectedDateTime, {
     String? tableId,
   }) {
-    final startDateTime = selectedDateTime.subtract(_totalReservationDuration);
-    final endDateTime = selectedDateTime.add(_totalReservationDuration);
+    final startDateTime = selectedDateTime.subtract(AppConstants.totalReservationDuration);
+    final endDateTime = selectedDateTime.add(AppConstants.totalReservationDuration);
     final query = _collection.where(
       _createdAtKey,
       isGreaterThanOrEqualTo: Timestamp.fromDate(startDateTime),

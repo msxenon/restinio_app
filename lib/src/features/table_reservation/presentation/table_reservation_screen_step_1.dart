@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:restinio_app/src/core/constants.dart';
 import 'package:restinio_app/src/core/navigation/routes.dart';
 import 'package:restinio_app/src/core/utilities/extensions/date_time_extensions.dart';
 
@@ -14,7 +15,8 @@ class TableReservationScreenStep1 extends StatefulWidget {
 }
 
 class _TableReservationScreenStep1 extends State<TableReservationScreenStep1> {
-  DateTime? datetime;
+  DateTime datetime = DateTime.now()
+      .toTheClosestHourAfter(AppConstants.totalReservationDuration);
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
@@ -23,19 +25,15 @@ class _TableReservationScreenStep1 extends State<TableReservationScreenStep1> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             CupertinoButton(
-              child: Text(datetime != null
-                  ? 'Tap to change date and time'
-                  : 'Tap to select date and time'),
+              child: const Text('Tap to change date and time'),
               onPressed: () => unawaited(_showDateTimePicker()),
             ),
-            if (datetime != null) Text(datetime!.toHumanReadable()),
+            Text(datetime.toHumanReadable()),
             const SizedBox(height: 20),
             CupertinoButton.filled(
-              onPressed: datetime != null
-                  ? () => TableReservationStep2Route(
-                          date: datetime!.millisecondsSinceEpoch.toString())
-                      .go(context)
-                  : null,
+              onPressed: () => TableReservationStep2Route(
+                      date: datetime.millisecondsSinceEpoch.toString())
+                  .push(context),
               child: const Text('Reserve'),
             ),
           ],
@@ -45,7 +43,7 @@ class _TableReservationScreenStep1 extends State<TableReservationScreenStep1> {
   }
 
   Future<void> _showDateTimePicker() async {
-    final initialPickerDateTime = datetime ?? DateTime.now();
+    final initialPickerDateTime = datetime;
     final newPickedDate = await showDatePicker(
       context: context,
       initialDate: datetime,

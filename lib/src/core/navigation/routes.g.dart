@@ -10,7 +10,6 @@ List<RouteBase> get $appRoutes => [
       $authenticationRoute,
       $homeShellRoute,
       $foodDetailsRoute,
-      $tableReservationStep2Route,
     ];
 
 RouteBase get $authenticationRoute => GoRouteData.$route(
@@ -50,8 +49,21 @@ RouteBase get $homeShellRoute => StatefulShellRouteData.$route(
         StatefulShellBranchData.$branch(
           routes: [
             GoRouteData.$route(
-              path: '/tables',
+              path: '/table_reservations',
               factory: $SecondTabRouteExtension._fromState,
+              routes: [
+                GoRouteData.$route(
+                  path: 's2/:date',
+                  factory: $TableReservationStep2RouteExtension._fromState,
+                  routes: [
+                    GoRouteData.$route(
+                      path: 's3/:tableId',
+                      name: 'xxxx',
+                      factory: $TableReservationStep3RouteExtension._fromState,
+                    ),
+                  ],
+                ),
+              ],
             ),
           ],
         ),
@@ -84,7 +96,48 @@ extension $SecondTabRouteExtension on SecondTabRoute {
   static SecondTabRoute _fromState(GoRouterState state) => SecondTabRoute();
 
   String get location => GoRouteData.$location(
-        '/tables',
+        '/table_reservations',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $TableReservationStep2RouteExtension on TableReservationStep2Route {
+  static TableReservationStep2Route _fromState(GoRouterState state) =>
+      TableReservationStep2Route(
+        date: state.pathParameters['date']!,
+      );
+
+  String get location => GoRouteData.$location(
+        '/table_reservations/s2/${Uri.encodeComponent(date)}',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $TableReservationStep3RouteExtension on TableReservationStep3Route {
+  static TableReservationStep3Route _fromState(GoRouterState state) =>
+      TableReservationStep3Route(
+        tableId: state.pathParameters['tableId']!,
+        date: int.parse(state.pathParameters['date']!),
+      );
+
+  String get location => GoRouteData.$location(
+        '/table_reservations/s2/${Uri.encodeComponent(date.toString())}/s3/${Uri.encodeComponent(tableId)}',
       );
 
   void go(BuildContext context) => context.go(location);
@@ -109,58 +162,6 @@ extension $FoodDetailsRouteExtension on FoodDetailsRoute {
 
   String get location => GoRouteData.$location(
         '/fd/${Uri.encodeComponent(foodId)}',
-      );
-
-  void go(BuildContext context) => context.go(location);
-
-  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
-
-  void pushReplacement(BuildContext context) =>
-      context.pushReplacement(location);
-
-  void replace(BuildContext context) => context.replace(location);
-}
-
-RouteBase get $tableReservationStep2Route => GoRouteData.$route(
-      path: '/tr/:date',
-      factory: $TableReservationStep2RouteExtension._fromState,
-      routes: [
-        GoRouteData.$route(
-          path: 'td/:tableId',
-          factory: $TableReservationStep3RouteExtension._fromState,
-        ),
-      ],
-    );
-
-extension $TableReservationStep2RouteExtension on TableReservationStep2Route {
-  static TableReservationStep2Route _fromState(GoRouterState state) =>
-      TableReservationStep2Route(
-        date: state.pathParameters['date']!,
-      );
-
-  String get location => GoRouteData.$location(
-        '/tr/${Uri.encodeComponent(date)}',
-      );
-
-  void go(BuildContext context) => context.go(location);
-
-  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
-
-  void pushReplacement(BuildContext context) =>
-      context.pushReplacement(location);
-
-  void replace(BuildContext context) => context.replace(location);
-}
-
-extension $TableReservationStep3RouteExtension on TableReservationStep3Route {
-  static TableReservationStep3Route _fromState(GoRouterState state) =>
-      TableReservationStep3Route(
-        tableId: state.pathParameters['tableId']!,
-        date: int.parse(state.pathParameters['date']!),
-      );
-
-  String get location => GoRouteData.$location(
-        '/tr/${Uri.encodeComponent(date.toString())}/td/${Uri.encodeComponent(tableId)}',
       );
 
   void go(BuildContext context) => context.go(location);

@@ -21,6 +21,7 @@ class TableReservationScreenStep2 extends StatelessWidget {
         middle: Text(
           'Table Reservation for ${selectedDateTime.toHumanReadable()}',
         ),
+        previousPageTitle: '',
       ),
       child: SafeArea(
         child: BlocProvider<TablesCubit>(

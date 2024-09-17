@@ -1,5 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:dart_mappable/dart_mappable.dart';
+import 'package:restinio_app/src/core/constants.dart';
 import 'package:restinio_app/src/features/table_reservation/domain/entities/reservation_entity.dart';
 import 'package:restinio_app/src/features/table_reservation/domain/entities/table_entity.dart';
 
@@ -33,10 +34,10 @@ class TableModel with TableModelMappable {
                 e,
                 (
                   e.createdAt.subtract(
-                    const Duration(hours: 6),
+                    AppConstants.totalReservationDuration,
                   ),
                   e.createdAt.add(
-                    const Duration(hours: 6),
+                    AppConstants.totalReservationDuration,
                   ),
                 ),
               ),
