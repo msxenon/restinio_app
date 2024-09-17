@@ -77,7 +77,7 @@ class _TableReservationModalContentState
                       context.read<TableDetailsCubit>().reserveTable(
                             _nameController.text,
                           );
-                      AppRouter.instance.router.pop();
+                      AppRouter.instance.pop();
                     }
                   },
                 ),

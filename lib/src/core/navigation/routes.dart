@@ -103,7 +103,7 @@ class TableReservationStep3Route extends GoRouteData {
               topBarTitle: const Text('Table Details'),
               leadingNavBarWidget: CupertinoButton(
                 child: const Icon(CupertinoIcons.xmark),
-                onPressed: () => AppRouter.instance.router.pop(context),
+                onPressed: () => AppRouter.instance.pop(),
               ),
               mainContentSliversBuilder: (context) => [
                 SliverToBoxAdapter(

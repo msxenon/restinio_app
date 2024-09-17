@@ -49,4 +49,8 @@ class AppRouter {
     );
     return _goRouterInstance!;
   }
+
+  void pop() {
+    router.pop();
+  }
 }

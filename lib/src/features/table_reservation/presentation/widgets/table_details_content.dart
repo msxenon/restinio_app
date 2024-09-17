@@ -79,7 +79,7 @@ class TableDetailsContent extends StatelessWidget {
                     context
                         .read<TableDetailsCubit>()
                         .cancelReservation(model.table.id);
-                    AppRouter.instance.router.pop();
+                    AppRouter.instance.pop();
                   },
                 ),
               const SizedBox(height: 16)
