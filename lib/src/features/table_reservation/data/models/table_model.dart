@@ -68,6 +68,17 @@ class TableModel with TableModelMappable {
           isReservedByCurrentUser ? reservationEntity!.key.bookedName : null,
     );
   }
+
+  static TableModel dummy(int index) {
+    return TableModel(
+      table: TableEntity(
+        id: index.toString(),
+        seats: 4 + index,
+        tag: 'Table $index',
+      ),
+      status: TableStatus.reserved,
+    );
+  }
 }
 
 enum TableStatus {

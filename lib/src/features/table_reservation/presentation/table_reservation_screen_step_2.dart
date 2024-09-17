@@ -33,21 +33,30 @@ class TableReservationScreenStep2 extends StatelessWidget {
           ),
           child: AsyncBlocBuilder<TablesCubit, List<TableModel>>(
             (context, state) {
-              return Wrap(
-                children: List.generate(
-                  state.length,
-                  (index) {
-                    final tableModel = state[index];
-                    return CustomPaintButton(tableModel, onTap: () {
-                      TableReservationStep3Route(
-                        date: selectedDateTime.millisecondsSinceEpoch,
-                        tableId: tableModel.table.id,
-                      ).go(context);
-                    });
-                  },
+              return SingleChildScrollView(
+                child: Wrap(
+                  children: List.generate(
+                    state.length,
+                    (index) {
+                      final tableModel = state[index];
+                      return CustomPaintButton(
+                        tableModel,
+                        onTap: () {
+                          TableReservationStep3Route(
+                            date: selectedDateTime.millisecondsSinceEpoch,
+                            tableId: tableModel.table.id,
+                          ).go(context);
+                        },
+                      );
+                    },
+                  ),
                 ),
               );
             },
+            dummyLoadingState: List.generate(
+              20,
+              (index) => TableModel.dummy(index),
+            ),
           ),
         ),
       ),

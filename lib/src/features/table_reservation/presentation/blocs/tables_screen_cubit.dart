@@ -23,7 +23,7 @@ class TablesCubit extends Cubit<AsyncState<List<TableModel>>> {
     _init();
   }
 
-  Future<void> _init() async {
+  void _init() {
     try {
       _subscription = CombineLatestStream.combine2(
           _tableRepository.streamAll(),
