@@ -140,6 +140,10 @@ class TableDetailsRoute extends GoRouteData {
             SliverWoltModalSheetPage(
               isTopBarLayerAlwaysVisible: true,
               topBarTitle: const Text('Table Details'),
+              leadingNavBarWidget: CupertinoButton(
+                child: const Icon(CupertinoIcons.xmark),
+                onPressed: () => AppRouter.instance.router.pop(context),
+              ),
               mainContentSliversBuilder: (context) => [
                 SliverToBoxAdapter(
                   child: TableDetailsContent(
@@ -155,10 +159,15 @@ class TableDetailsRoute extends GoRouteData {
               isTopBarLayerAlwaysVisible: true,
               topBarTitle: const Text('Table Reservation'),
               hasTopBarLayer: true,
+              leadingNavBarWidget: CupertinoNavigationBarBackButton(
+                onPressed: () => WoltModalSheet.of(context).showPrevious(),
+              ),
               mainContentSliversBuilder: (context) => [
                 SliverToBoxAdapter(
                   child: TableReservationModalContent(
-                      tableId: tableId, date: date),
+                    tableId: tableId,
+                    date: date,
+                  ),
                 ),
               ],
             )
