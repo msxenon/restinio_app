@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:restinio_app/src/core/di/dependencies_container.dart';
+import 'package:restinio_app/src/core/navigation/wolt_modal_page.dart';
 import 'package:restinio_app/src/features/authentication/presentation/authentication_screen.dart';
 import 'package:restinio_app/src/features/authentication/presentation/blocs/authentication_cubit.dart';
 import 'package:restinio_app/src/features/food/presentation/food_screen.dart';
@@ -109,8 +110,7 @@ class TableTabRoute extends GoRouteData {
 @TypedGoRoute<TableReservationRoute>(
   path: '/table_reservation/:date',
   routes: [
-    TypedGoRoute<TableDetailsRoute>(path: 'table_details/:tid'),
-    TypedGoRoute<TableReservationStep2Route>(path: 's2/:tid'),
+    TypedGoRoute<TableDetailsRoute>(path: 'table_details/:tableId'),
   ],
 )
 class TableReservationRoute extends GoRouteData {
@@ -126,60 +126,45 @@ class TableReservationRoute extends GoRouteData {
 }
 
 class TableDetailsRoute extends GoRouteData {
-  final String tid;
+  final String tableId;
   final int date;
-  TableDetailsRoute({required this.tid, required this.date});
+  TableDetailsRoute({required this.tableId, required this.date});
 
   @override
   Page<void> buildPage(BuildContext context, GoRouterState state) {
     return WoltModalPage(
       key: state.pageKey,
-      builder: (context) {
-        return TableDetailsContent(tableId: tid, date: date);
-      },
-    );
-  }
-}
-
-class TableReservationStep2Route extends GoRouteData {
-  final String tid;
-  final int date;
-  TableReservationStep2Route({required this.tid, required this.date});
-
-  @override
-  Page<void> buildPage(BuildContext context, GoRouterState state) {
-    return WoltModalPage(
-      key: state.pageKey,
-      builder: (context) {
-        return TableReservationModalContent(tableId: tid, date: date);
-      },
-    );
-  }
-}
-
-class WoltModalPage<T> extends Page<T> {
-  final WidgetBuilder builder;
-  const WoltModalPage({
-    required this.builder,
-    required super.key,
-  });
-
-  @override
-  Route<T> createRoute(BuildContext context) {
-    return WoltModalSheetRoute(
-      settings: this,
-      pageListBuilderNotifier: ValueNotifier((context) {
-        return [
-          SliverWoltModalSheetPage(
-            hasTopBarLayer: false,
-            mainContentSliversBuilder: (context) => [
-              SliverToBoxAdapter(
-                child: builder(context),
-              ),
-            ],
-          )
-        ];
-      }),
+      pageListBuilderNotifier: ValueNotifier(
+        (context) {
+          return [
+            SliverWoltModalSheetPage(
+              isTopBarLayerAlwaysVisible: true,
+              topBarTitle: const Text('Table Details'),
+              mainContentSliversBuilder: (context) => [
+                SliverToBoxAdapter(
+                  child: TableDetailsContent(
+                    tableId: tableId,
+                    date: date,
+                    onNavigateToReservation: () =>
+                        WoltModalSheet.of(context).showNext(),
+                  ),
+                ),
+              ],
+            ),
+            SliverWoltModalSheetPage(
+              isTopBarLayerAlwaysVisible: true,
+              topBarTitle: const Text('Table Reservation'),
+              hasTopBarLayer: true,
+              mainContentSliversBuilder: (context) => [
+                SliverToBoxAdapter(
+                  child: TableReservationModalContent(
+                      tableId: tableId, date: date),
+                ),
+              ],
+            )
+          ];
+        },
+      ),
     );
   }
 }

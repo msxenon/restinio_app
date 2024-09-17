@@ -15,10 +15,11 @@ class TableDetailsContent extends StatelessWidget {
     super.key,
     required this.date,
     required this.tableId,
+    required this.onNavigateToReservation,
   });
   final String tableId;
   final int date;
-
+  final VoidCallback onNavigateToReservation;
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -65,11 +66,8 @@ class TableDetailsContent extends StatelessWidget {
               ),
               if (model.status == TableStatus.available)
                 CupertinoButton.filled(
+                  onPressed: onNavigateToReservation,
                   child: const Text('Book it now'),
-                  onPressed: () {
-                    TableReservationStep2Route(date: date, tid: tableId)
-                        .go(context);
-                  },
                 ),
               if (model.status == TableStatus.reservedByCurrentUser)
                 CupertinoButton(

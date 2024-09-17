@@ -40,7 +40,7 @@ class TableReservationScreen extends StatelessWidget {
                     return CustomPaintButton(tableModel, onTap: () {
                       TableDetailsRoute(
                         date: selectedDateTime.millisecondsSinceEpoch,
-                        tid: tableModel.table.id,
+                        tableId: tableModel.table.id,
                       ).go(context);
                     });
                   },

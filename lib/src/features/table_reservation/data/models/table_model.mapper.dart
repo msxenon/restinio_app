@@ -27,15 +27,22 @@ class TableModelMapper extends ClassMapperBase<TableModel> {
   static TableStatus _$status(TableModel v) => v.status;
   static const Field<TableModel, TableStatus> _f$status =
       Field('status', _$status);
+  static String? _$bookedName(TableModel v) => v.bookedName;
+  static const Field<TableModel, String> _f$bookedName =
+      Field('bookedName', _$bookedName, opt: true);
 
   @override
   final MappableFields<TableModel> fields = const {
     #table: _f$table,
     #status: _f$status,
+    #bookedName: _f$bookedName,
   };
 
   static TableModel _instantiate(DecodingData data) {
-    return TableModel(table: data.dec(_f$table), status: data.dec(_f$status));
+    return TableModel(
+        table: data.dec(_f$table),
+        status: data.dec(_f$status),
+        bookedName: data.dec(_f$bookedName));
   }
 
   @override
@@ -90,7 +97,7 @@ extension TableModelValueCopy<$R, $Out>
 abstract class TableModelCopyWith<$R, $In extends TableModel, $Out>
     implements ClassCopyWith<$R, $In, $Out> {
   TableEntityCopyWith<$R, TableEntity, TableEntity> get table;
-  $R call({TableEntity? table, TableStatus? status});
+  $R call({TableEntity? table, TableStatus? status, String? bookedName});
   TableModelCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
 }
 
@@ -106,15 +113,20 @@ class _TableModelCopyWithImpl<$R, $Out>
   TableEntityCopyWith<$R, TableEntity, TableEntity> get table =>
       $value.table.copyWith.$chain((v) => call(table: v));
   @override
-  $R call({TableEntity? table, TableStatus? status}) =>
+  $R call(
+          {TableEntity? table,
+          TableStatus? status,
+          Object? bookedName = $none}) =>
       $apply(FieldCopyWithData({
         if (table != null) #table: table,
-        if (status != null) #status: status
+        if (status != null) #status: status,
+        if (bookedName != $none) #bookedName: bookedName
       }));
   @override
   TableModel $make(CopyWithData data) => TableModel(
       table: data.get(#table, or: $value.table),
-      status: data.get(#status, or: $value.status));
+      status: data.get(#status, or: $value.status),
+      bookedName: data.get(#bookedName, or: $value.bookedName));
 
   @override
   TableModelCopyWith<$R2, TableModel, $Out2> $chain<$R2, $Out2>(
