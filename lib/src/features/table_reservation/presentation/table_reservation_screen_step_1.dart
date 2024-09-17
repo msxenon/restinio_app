@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:restinio_app/src/core/constants.dart';
+import 'package:restinio_app/src/core/constants/constants.dart';
 import 'package:restinio_app/src/core/navigation/routes.dart';
 import 'package:restinio_app/src/core/utilities/extensions/date_time_extensions.dart';
 

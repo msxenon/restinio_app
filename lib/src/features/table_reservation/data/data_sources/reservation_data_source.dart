@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:restinio_app/src/core/constants.dart';
+import 'package:restinio_app/src/core/constants/constants.dart';
 import 'package:restinio_app/src/features/table_reservation/domain/entities/reservation_entity.dart';
 
 class ReservationDataSource {

@@ -8,6 +8,7 @@ class PriceWidget extends StatelessWidget {
   static final _numberFormat = NumberFormat("00");
   @override
   Widget build(BuildContext context) {
+    final textTheme = CupertinoTheme.of(context).textTheme;
     final int wholeNumber = price.toInt();
     final decimalNumber = _numberFormat.format((price - wholeNumber) * 100);
     return RichText(
@@ -15,11 +16,13 @@ class PriceWidget extends StatelessWidget {
         children: [
           TextSpan(
             text: "€$wholeNumber",
-            style: CupertinoTheme.of(context).textTheme.navTitleTextStyle,
+            style: textTheme.navTitleTextStyle.copyWith(
+              color: CupertinoTheme.of(context).barBackgroundColor,
+            ),
           ),
           TextSpan(
             text: ".$decimalNumber",
-            style: CupertinoTheme.of(context).textTheme.tabLabelTextStyle,
+            style: textTheme.tabLabelTextStyle,
           ),
         ],
       ),

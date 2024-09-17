@@ -47,9 +47,8 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: CupertinoApp.router(
-        routeInformationParser: router.routeInformationParser,
-        routeInformationProvider: router.routeInformationProvider,
-        routerDelegate: router.routerDelegate,
+        routerConfig: router,
+        title: 'Restinio',
         theme: theme,
         builder: (context, child) {
           return SkeletonizerConfig(

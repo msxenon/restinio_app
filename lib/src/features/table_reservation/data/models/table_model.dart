@@ -1,6 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:dart_mappable/dart_mappable.dart';
-import 'package:restinio_app/src/core/constants.dart';
+import 'package:restinio_app/src/core/constants/constants.dart';
 import 'package:restinio_app/src/features/table_reservation/domain/entities/reservation_entity.dart';
 import 'package:restinio_app/src/features/table_reservation/domain/entities/table_entity.dart';
 

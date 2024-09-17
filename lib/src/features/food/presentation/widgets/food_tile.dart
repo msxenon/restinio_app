@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -16,83 +18,82 @@ class FoodTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomButton(
       onTap: onTap,
-      child: Container(
-        clipBehavior: Clip.antiAlias,
-        margin: const EdgeInsets.all(8),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          color: const Color(0xffffffff),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.2),
-              spreadRadius: 0,
-              blurRadius: 5,
-              offset: const Offset(0, 3), // changes position of shadow
+      child: LayoutBuilder(builder: (context, constraints) {
+        return Container(
+          clipBehavior: Clip.antiAlias,
+          margin: const EdgeInsets.all(2),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            color: food.imageUrl.isEmpty ? const Color(0xffF3F2F3) : null,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.6),
+                spreadRadius: 1,
+                blurRadius: 5,
+                offset: const Offset(0, 0), // changes position of shadow
+              ),
+            ],
+            image: food.imageUrl.isNotEmpty
+                ? DecorationImage(
+                    image: CachedNetworkImageProvider(
+                      food.imageUrl,
+                      cacheManager:
+                          DependenciesContainer.get<AppCacheManager>(),
+                      imageRenderMethodForWeb: ImageRenderMethodForWeb.HttpGet,
+                    ),
+                    fit: BoxFit.cover,
+                  )
+                : null,
+          ),
+          child: Container(
+            margin: EdgeInsets.only(top: constraints.maxHeight * 0.80),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Colors.black.withOpacity(0.5),
+                  Colors.black,
+                ],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+              ),
             ),
-          ],
-        ),
-        child: LayoutBuilder(
-          builder: (context, constraints) {
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  clipBehavior: Clip.antiAlias,
-                  margin: const EdgeInsets.all(1),
-                  constraints: BoxConstraints.expand(
-                      height: constraints.maxHeight * 0.85),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: const Color(0xffF3F2F3),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.6),
-                        spreadRadius: 1,
-                        blurRadius: 5,
-                        offset:
-                            const Offset(0, 0), // changes position of shadow
-                      ),
-                    ],
-                  ),
-                  child: food.imageUrl.isNotEmpty
-                      ? CachedNetworkImage(
-                          fit: BoxFit.cover,
-                          imageUrl: food.imageUrl,
-                          cacheManager:
-                              DependenciesContainer.get<AppCacheManager>(),
-                          imageRenderMethodForWeb:
-                              ImageRenderMethodForWeb.HttpGet,
-                        )
-                      : null,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+            child: ClipRect(
+              clipBehavior: Clip.antiAlias,
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            food.name,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                food.name,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const SizedBox(height: 4),
+                              PriceWidget(food.price),
+                            ],
                           ),
-                          const SizedBox(height: 4),
-                          PriceWidget(food.price),
+                          const CupertinoListTileChevron()
                         ],
                       ),
-                      const CupertinoListTileChevron()
-                    ],
-                  ),
-                )
-              ],
-            );
-          },
-        ),
-      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+          ),
+        );
+      }),
     );
   }
 }
