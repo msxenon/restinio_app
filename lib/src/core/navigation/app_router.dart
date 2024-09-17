@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -52,5 +54,22 @@ class AppRouter {
 
   void pop() {
     router.pop();
+  }
+
+  void showDelayedInfoDialog(String message) {
+    unawaited(
+      Future.delayed(
+        const Duration(milliseconds: 300),
+        () {
+          final context = rootNavigatorKey.currentContext;
+          if (context == null || !context.mounted) return;
+
+          showCupertinoModalPopup(
+            context: context,
+            builder: (_) => CupertinoActionSheet(message: Text(message)),
+          );
+        },
+      ),
+    );
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -74,10 +76,7 @@ class _TableReservationModalContentState
                   child: const Text('Book'),
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
-                      context.read<TableDetailsCubit>().reserveTable(
-                            _nameController.text,
-                          );
-                      AppRouter.instance.pop();
+                      unawaited(_reserveTable(context, model));
                     }
                   },
                 ),
@@ -87,5 +86,18 @@ class _TableReservationModalContentState
         },
       ),
     );
+  }
+
+  Future<void> _reserveTable(BuildContext context, TableModel model) async {
+    final isReserved = await context.read<TableDetailsCubit>().reserveTable(
+          _nameController.text,
+        );
+    if (context.mounted && isReserved) {
+      AppRouter.instance
+        ..pop()
+        ..showDelayedInfoDialog(
+          'Table is reserved for ${_nameController.text}',
+        );
+    }
   }
 }

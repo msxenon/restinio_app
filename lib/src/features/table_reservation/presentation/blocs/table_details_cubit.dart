@@ -60,7 +60,7 @@ class TableDetailsCubit extends Cubit<AsyncState<TableModel?>> {
     return super.close();
   }
 
-  Future<void> reserveTable(String bookedName) async {
+  Future<bool> reserveTable(String bookedName) async {
     try {
       emit(const AsyncStateLoading());
       await _reservationRepository.reserveTable(
@@ -69,18 +69,24 @@ class TableDetailsCubit extends Cubit<AsyncState<TableModel?>> {
         bookedName: bookedName,
         selectedDateTime: _selectedDateTime,
       );
+      return true;
     } catch (e) {
       emit(AsyncStateFailure(e.toString()));
     }
+    return false;
   }
 
-  void cancelReservation(String tableId) {
+  Future<bool> cancelReservation(String tableId) async {
     try {
       emit(const AsyncStateLoading());
       _reservationRepository.cancelReservation(
-          tableId: tableId, userId: _authenticationRepository.userId!);
+        tableId: tableId,
+        userId: _authenticationRepository.userId!,
+      );
+      return true;
     } catch (e) {
       emit(AsyncStateFailure(e.toString()));
     }
+    return false;
   }
 }

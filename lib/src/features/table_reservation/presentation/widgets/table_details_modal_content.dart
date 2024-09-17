@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -76,10 +78,7 @@ class TableDetailsModalContent extends StatelessWidget {
                     style: TextStyle(color: Colors.red),
                   ),
                   onPressed: () {
-                    context
-                        .read<TableDetailsCubit>()
-                        .cancelReservation(model.table.id);
-                    AppRouter.instance.pop();
+                    unawaited(_cancelReservation(context, model));
                   },
                 ),
               const SizedBox(height: 16)
@@ -88,5 +87,21 @@ class TableDetailsModalContent extends StatelessWidget {
         },
       ),
     );
+  }
+
+  Future<void> _cancelReservation(
+    BuildContext context,
+    TableModel model,
+  ) async {
+    final isCancelled = await context
+        .read<TableDetailsCubit>()
+        .cancelReservation(model.table.id);
+    if (context.mounted && isCancelled) {
+      AppRouter.instance
+        ..pop()
+        ..showDelayedInfoDialog(
+          'Table reservation is cancelled',
+        );
+    }
   }
 }
