@@ -48,30 +48,35 @@ class MyApp extends StatelessWidget {
           create: (context) => FoodScreenBloc(FoodRepository.instance),
         ),
       ],
-      child: CupertinoApp.router(
-        routerConfig: router,
-        title: 'Restinio',
-        theme: theme,
-        builder: (context, child) {
-          return SkeletonizerConfig(
-            data: SkeletonizerConfigData(
-              enableSwitchAnimation: true,
-              ignoreContainers: false,
-              effect: ShimmerEffect(
-                baseColor: AppColors.secondaryOnSurface,
-                highlightColor: theme.scaffoldBackgroundColor,
-              ),
-            ),
-            child: child ?? const SizedBox(),
-          );
+      child: GestureDetector(
+        onTap: () {
+          FocusScope.of(context).requestFocus(FocusNode());
         },
-        localizationsDelegates: const <LocalizationsDelegate<dynamic>>[
-          DefaultMaterialLocalizations.delegate,
-          DefaultCupertinoLocalizations.delegate,
-        ],
-        supportedLocales: const <Locale>[
-          Locale('en', 'US'),
-        ],
+        child: CupertinoApp.router(
+          routerConfig: router,
+          title: 'Restinio',
+          theme: theme,
+          builder: (context, child) {
+            return SkeletonizerConfig(
+              data: SkeletonizerConfigData(
+                enableSwitchAnimation: true,
+                ignoreContainers: true,
+                effect: ShimmerEffect(
+                  baseColor: AppColors.secondaryOnSurface.withOpacity(0.3),
+                  highlightColor: theme.scaffoldBackgroundColor,
+                ),
+              ),
+              child: child ?? const SizedBox(),
+            );
+          },
+          localizationsDelegates: const <LocalizationsDelegate<dynamic>>[
+            DefaultMaterialLocalizations.delegate,
+            DefaultCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: const <Locale>[
+            Locale('en', 'US'),
+          ],
+        ),
       ),
     );
   }
