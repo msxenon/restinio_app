@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -15,11 +16,11 @@ class HomeScreen extends StatelessWidget {
         currentIndex: navigationShell.currentIndex,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.circle),
+            icon: FaIcon(FontAwesomeIcons.bowlFood),
             label: 'Food',
           ),
           BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.table),
+            icon: FaIcon(FontAwesomeIcons.registered),
             label: 'Tables',
           ),
         ],

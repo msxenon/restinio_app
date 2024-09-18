@@ -1,132 +1,13 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:go_router/go_router.dart';
-import 'package:restinio_app/src/core/constants/app_colors.dart';
 import 'package:restinio_app/src/core/di/dependencies_container.dart';
-import 'package:restinio_app/src/core/navigation/app_router.dart';
-import 'package:restinio_app/src/features/authentication/domain/repositories/authentication_repository.dart';
-import 'package:restinio_app/src/features/authentication/presentation/blocs/authentication_cubit.dart';
-import 'package:restinio_app/src/features/food/domain/repositories/food_repository.dart';
-import 'package:restinio_app/src/features/food/presentation/blocs/food_screen_bloc.dart';
-import 'package:restinio_app/src/features/food/presentation/food_screen.dart';
-import 'package:skeletonizer/skeletonizer.dart';
+import 'package:restinio_app/src/core/presentation/restinio_app.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   usePathUrlStrategy();
   GoRouter.optionURLReflectsImperativeAPIs = true;
   await DependenciesContainer.init();
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    const theme = CupertinoThemeData(
-      brightness: Brightness.light,
-      primaryColor: AppColors.primaryColor,
-      scaffoldBackgroundColor: AppColors.primarySurface,
-      textTheme: CupertinoTextThemeData(
-        primaryColor: AppColors.onSurface,
-      ),
-    );
-    final router = AppRouter.instance.router;
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider<AuthenticationCubit>(
-          create: (context) => AuthenticationCubit(
-            AuthenticationRepository.instance,
-            AppRouter.instance,
-          ),
-        ),
-        BlocProvider<FoodScreenBloc>(
-          create: (context) => FoodScreenBloc(FoodRepository.instance),
-        ),
-      ],
-      child: GestureDetector(
-        onTap: () {
-          FocusScope.of(context).requestFocus(FocusNode());
-        },
-        child: CupertinoApp.router(
-          routerConfig: router,
-          title: 'Restinio',
-          theme: theme,
-          builder: (context, child) {
-            return SkeletonizerConfig(
-              data: SkeletonizerConfigData(
-                enableSwitchAnimation: true,
-                ignoreContainers: true,
-                effect: ShimmerEffect(
-                  baseColor: AppColors.secondaryOnSurface.withOpacity(0.3),
-                  highlightColor: theme.scaffoldBackgroundColor,
-                ),
-              ),
-              child: child ?? const SizedBox(),
-            );
-          },
-          localizationsDelegates: const <LocalizationsDelegate<dynamic>>[
-            DefaultMaterialLocalizations.delegate,
-            DefaultCupertinoLocalizations.delegate,
-          ],
-          supportedLocales: const <Locale>[
-            Locale('en', 'US'),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: SystemUiOverlayStyle(
-        statusBarBrightness: Brightness.light,
-        statusBarColor: CupertinoTheme.of(context).barBackgroundColor,
-        statusBarIconBrightness: Brightness.dark,
-        systemNavigationBarColor: CupertinoTheme.of(context).barBackgroundColor,
-        systemNavigationBarIconBrightness: Brightness.dark,
-      ),
-      child: CupertinoTabScaffold(
-        tabBar: CupertinoTabBar(
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(CupertinoIcons.circle),
-              label: 'Food',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(CupertinoIcons.table),
-              label: 'Tables',
-            ),
-          ],
-        ),
-        tabBuilder: (BuildContext context, int index) {
-          return IndexedStack(
-            index: index,
-            children: <Widget>[
-              const FoodScreen(),
-              Container(
-                color: CupertinoColors.systemYellow,
-              ),
-            ],
-          );
-        },
-      ),
-    );
-  }
+  runApp(const RestinioApp());
 }
