@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+import 'package:restinio_app/src/core/constants/app_colors.dart';
 import 'package:restinio_app/src/features/table_reservation/data/models/table_model.dart';
 import 'package:restinio_app/src/features/table_reservation/presentation/widgets/table_widget.dart';
 
@@ -36,10 +36,10 @@ class _CustomPaintButtonState extends State<CustomPaintButton>
     Color buttonColor;
     switch (widget.tableModel.status) {
       case TableStatus.reserved:
-        buttonColor = Colors.grey[300]!;
+        buttonColor = AppColors.secondaryOnSurface;
         break;
       case TableStatus.reservedByCurrentUser:
-        buttonColor = Colors.grey[300]!;
+        buttonColor = AppColors.secondaryOnSurface;
         break;
       case TableStatus.available:
         buttonColor = CupertinoTheme.of(context).primaryColor.withOpacity(0.5);

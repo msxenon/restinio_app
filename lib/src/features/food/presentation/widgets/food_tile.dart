@@ -1,8 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:cached_network_image_platform_interface/cached_network_image_platform_interface.dart';
 import 'package:restinio_app/src/core/constants/app_colors.dart';
+import 'package:restinio_app/src/core/constants/constants.dart';
 import 'package:restinio_app/src/core/di/dependencies_container.dart';
 import 'package:restinio_app/src/core/presentation/widgets/custom_button.dart';
 import 'package:restinio_app/src/core/services/app_cache_manager.dart';
@@ -14,7 +14,6 @@ class FoodTile extends StatelessWidget {
   final FoodEntity food;
   final VoidCallback onTap;
   const FoodTile(this.food, {required this.onTap, super.key});
-  static const _radius = 10.0;
   @override
   Widget build(BuildContext context) {
     return CustomButton(
@@ -23,7 +22,7 @@ class FoodTile extends StatelessWidget {
         clipBehavior: Clip.antiAlias,
         margin: const EdgeInsets.all(2),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(_radius),
+          borderRadius: BorderRadius.circular(AppConstants.radius),
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -41,7 +40,7 @@ class FoodTile extends StatelessWidget {
                 margin:
                     const EdgeInsets.symmetric(horizontal: 8).copyWith(top: 16),
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(_radius),
+                  borderRadius: BorderRadius.circular(AppConstants.radius),
                   color: food.imageUrl.isEmpty ? const Color(0xffF3F2F3) : null,
                   boxShadow: [
                     BoxShadow(

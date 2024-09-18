@@ -29,6 +29,7 @@ dependencies:
   rxdart: ^0.28.0
   collection: ^1.18.0
   wolt_modal_sheet: ^0.9.3
+  font_awesome_flutter: ^10.7.0
   
 dev_dependencies:
   flutter_test:

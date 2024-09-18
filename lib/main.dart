@@ -58,7 +58,7 @@ class MyApp extends StatelessWidget {
               enableSwitchAnimation: true,
               ignoreContainers: false,
               effect: ShimmerEffect(
-                baseColor: Colors.grey[300]!,
+                baseColor: AppColors.secondaryOnSurface,
                 highlightColor: theme.scaffoldBackgroundColor,
               ),
             ),
@@ -69,9 +69,9 @@ class MyApp extends StatelessWidget {
           DefaultMaterialLocalizations.delegate,
           DefaultCupertinoLocalizations.delegate,
         ],
-        // supportedLocales: const <Locale>[
-        //   Locale('en', 'US'),
-        // ],
+        supportedLocales: const <Locale>[
+          Locale('en', 'US'),
+        ],
       ),
     );
   }

@@ -12,4 +12,6 @@ class AppColors {
   static const secondaryOnSurface = Color(0xffB5B8BC);
 
   static final shadow = Colors.black.withOpacity(0.1);
+
+  static const negativeColor = Color(0xffFF3B30);
 }

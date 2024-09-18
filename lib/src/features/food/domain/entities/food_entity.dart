@@ -27,3 +27,10 @@ class FoodEntity extends BaseEntity with FoodEntityMappable {
 
   static const fromMap = FoodEntityMapper.fromMap;
 }
+
+extension FoodEntityX on FoodEntity {
+  String get fatsUnitValue => 'g fats';
+  String get proteinsUnitValue => 'g proteins';
+  String get carbsUnitValue => 'g carbs';
+  String get kcalUnitValue => ' kcal';
+}

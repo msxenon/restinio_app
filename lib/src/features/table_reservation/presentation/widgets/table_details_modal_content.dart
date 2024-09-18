@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:restinio_app/src/core/async_bloc_builder.dart';
+import 'package:restinio_app/src/core/constants/app_colors.dart';
 import 'package:restinio_app/src/core/navigation/app_router.dart';
 import 'package:restinio_app/src/features/authentication/domain/repositories/authentication_repository.dart';
 import 'package:restinio_app/src/features/table_reservation/data/models/table_model.dart';
@@ -75,7 +75,7 @@ class TableDetailsModalContent extends StatelessWidget {
                 CupertinoButton(
                   child: const Text(
                     'Cancel reservation',
-                    style: TextStyle(color: Colors.red),
+                    style: TextStyle(color: AppColors.negativeColor),
                   ),
                   onPressed: () {
                     unawaited(_cancelReservation(context, model));
