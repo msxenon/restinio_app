@@ -31,7 +31,6 @@ class FoodScreenBloc extends Cubit<AsyncState<List<FoodEntity>>> {
 
   void search(String searchKeyword) {
     final cleanSearchKeyword = searchKeyword.trim();
-    if (cleanSearchKeyword.isEmpty) return;
     _searchSubject.add(cleanSearchKeyword);
   }
 
@@ -43,7 +42,9 @@ class FoodScreenBloc extends Cubit<AsyncState<List<FoodEntity>>> {
   }
 
   Future<void> _execSearch(String searchKeyword) async {
-    if (searchKeyword.isEmpty) return;
+    if (searchKeyword.isEmpty) {
+      return unawaited(_getAll());
+    }
     emit(const AsyncStateLoading());
     try {
       final result = <FoodEntity>[];

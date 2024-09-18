@@ -41,7 +41,7 @@ class FoodTile extends StatelessWidget {
                     const EdgeInsets.symmetric(horizontal: 8).copyWith(top: 16),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(AppConstants.radius),
-                  color: food.imageUrl.isEmpty ? const Color(0xffF3F2F3) : null,
+                  color: AppColors.primarySurface,
                   boxShadow: [
                     BoxShadow(
                       color: AppColors.shadow,

@@ -55,12 +55,14 @@ class _FoodScreenState extends State<FoodScreen> {
                   child: CupertinoSearchTextField(
                     controller: textController,
                     placeholder: 'Search',
-                    onSuffixTap: () => context.read<FoodScreenBloc>().onClearSearchTapped(),
                   ),
                 ),
                 Expanded(
                   child: AsyncBlocBuilder<FoodScreenBloc, List<FoodEntity>>(
                     (context, snapshot) {
+                      if (snapshot.isEmpty) {
+                        return const Center(child: Text('No items found'));
+                      }
                       return LayoutBuilder(builder: (context, constraints) {
                         final screenWidth = constraints.maxWidth;
 
