@@ -55,8 +55,6 @@ class _FoodScreenState extends State<FoodScreen> {
                   child: CupertinoSearchTextField(
                     controller: textController,
                     placeholder: 'Search',
-                    onSuffixTap: () =>
-                        context.read<FoodScreenBloc>().onClearSearchTapped(),
                   ),
                 ),
                 Expanded(
