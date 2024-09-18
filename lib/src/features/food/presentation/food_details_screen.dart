@@ -8,7 +8,7 @@ import 'package:restinio_app/src/core/navigation/app_router.dart';
 import 'package:restinio_app/src/core/presentation/widgets/custom_cached_network_image.dart';
 import 'package:restinio_app/src/features/food/domain/entities/food_entity.dart';
 import 'package:restinio_app/src/features/food/domain/repositories/food_repository.dart';
-import 'package:restinio_app/src/features/food/presentation/blocs/food_details_bloc.dart';
+import 'package:restinio_app/src/features/food/presentation/blocs/food_details_screen_bloc.dart';
 import 'package:restinio_app/src/features/food/presentation/widgets/food_property_tile.dart';
 import 'package:restinio_app/src/features/food/presentation/widgets/price_widget.dart';
 
@@ -20,9 +20,9 @@ class FoodDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
       backgroundColor: AppColors.secondarySurface,
-      child: BlocProvider<FoodDetailsBloc>(
-        create: (context) => FoodDetailsBloc(foodId, FoodRepository.instance),
-        child: AsyncBlocBuilder<FoodDetailsBloc, FoodEntity?>(
+      child: BlocProvider<FoodDetailsScreenBloc>(
+        create: (context) => FoodDetailsScreenBloc(foodId, FoodRepository.instance),
+        child: AsyncBlocBuilder<FoodDetailsScreenBloc, FoodEntity?>(
           (context, state) {
             if (state == null) {
               return const Center(child: Text('Item not found'));

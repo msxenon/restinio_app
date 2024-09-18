@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:restinio_app/src/core/async_bloc_builder.dart';
 import 'package:restinio_app/src/core/navigation/routes.dart';
 import 'package:restinio_app/src/features/food/domain/entities/food_entity.dart';
-import 'package:restinio_app/src/features/food/presentation/blocs/food_bloc.dart';
+import 'package:restinio_app/src/features/food/presentation/blocs/food_screen_bloc.dart';
 import 'package:restinio_app/src/features/food/presentation/widgets/food_tile.dart';
 
 class FoodScreen extends StatelessWidget {
@@ -34,7 +34,7 @@ class FoodScreen extends StatelessWidget {
           ),
           child: SafeArea(
             child: Center(
-              child: AsyncBlocBuilder<FoodBloc, List<FoodEntity>>(
+              child: AsyncBlocBuilder<FoodScreenBloc, List<FoodEntity>>(
                 (context, snapshot) {
                   return LayoutBuilder(builder: (context, constraints) {
                     final screenWidth = constraints.maxWidth;

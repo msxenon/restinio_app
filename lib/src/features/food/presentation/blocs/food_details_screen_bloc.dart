@@ -5,10 +5,10 @@ import 'package:restinio_app/src/features/authentication/presentation/blocs/auth
 import 'package:restinio_app/src/features/food/domain/entities/food_entity.dart';
 import 'package:restinio_app/src/features/food/domain/repositories/food_repository.dart';
 
-class FoodDetailsBloc extends Cubit<AsyncState<FoodEntity?>> {
+class FoodDetailsScreenBloc extends Cubit<AsyncState<FoodEntity?>> {
   final FoodRepository _foodRepository;
   final String foodId;
-  FoodDetailsBloc(this.foodId, this._foodRepository)
+  FoodDetailsScreenBloc(this.foodId, this._foodRepository)
       : super(const AsyncStateLoading(),) {
     unawaited(_get());
   }

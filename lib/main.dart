@@ -10,7 +10,7 @@ import 'package:restinio_app/src/core/navigation/app_router.dart';
 import 'package:restinio_app/src/features/authentication/domain/repositories/authentication_repository.dart';
 import 'package:restinio_app/src/features/authentication/presentation/blocs/authentication_cubit.dart';
 import 'package:restinio_app/src/features/food/domain/repositories/food_repository.dart';
-import 'package:restinio_app/src/features/food/presentation/blocs/food_bloc.dart';
+import 'package:restinio_app/src/features/food/presentation/blocs/food_screen_bloc.dart';
 import 'package:restinio_app/src/features/food/presentation/food_screen.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
@@ -44,8 +44,8 @@ class MyApp extends StatelessWidget {
             AppRouter.instance,
           ),
         ),
-        BlocProvider<FoodBloc>(
-          create: (context) => FoodBloc(FoodRepository.instance),
+        BlocProvider<FoodScreenBloc>(
+          create: (context) => FoodScreenBloc(FoodRepository.instance),
         ),
       ],
       child: CupertinoApp.router(
