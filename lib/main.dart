@@ -30,8 +30,9 @@ class MyApp extends StatelessWidget {
     const theme = CupertinoThemeData(
       brightness: Brightness.light,
       primaryColor: AppColors.primaryColor,
+      scaffoldBackgroundColor: AppColors.primarySurface,
       textTheme: CupertinoTextThemeData(
-        primaryColor: CupertinoColors.black,
+        primaryColor: AppColors.onSurface,
       ),
     );
     final router = AppRouter.instance.router;

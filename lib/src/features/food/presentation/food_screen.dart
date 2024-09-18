@@ -17,6 +17,10 @@ class FoodScreen extends StatelessWidget {
       description: 'Loading...',
       imageUrl: '',
       price: index.toDouble(),
+      proteins: index,
+      kcal: index,
+      fats: index,
+      carbs: index,
     ),
   );
 

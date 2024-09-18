@@ -8,6 +8,10 @@ class FoodEntity extends BaseEntity with FoodEntityMappable {
   final String description;
   final double price;
   final String imageUrl;
+  final int proteins;
+  final int kcal;
+  final int fats;
+  final int carbs;
 
   const FoodEntity({
     required super.id,
@@ -15,8 +19,11 @@ class FoodEntity extends BaseEntity with FoodEntityMappable {
     required this.description,
     required this.price,
     required this.imageUrl,
+    required this.proteins,
+    required this.kcal,
+    required this.fats,
+    required this.carbs,
   });
 
   static const fromMap = FoodEntityMapper.fromMap;
-  static const fromJson = FoodEntityMapper.fromJson;
 }

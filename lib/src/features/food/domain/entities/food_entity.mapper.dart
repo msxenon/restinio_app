@@ -33,6 +33,15 @@ class FoodEntityMapper extends ClassMapperBase<FoodEntity> {
   static String _$imageUrl(FoodEntity v) => v.imageUrl;
   static const Field<FoodEntity, String> _f$imageUrl =
       Field('imageUrl', _$imageUrl);
+  static int _$proteins(FoodEntity v) => v.proteins;
+  static const Field<FoodEntity, int> _f$proteins =
+      Field('proteins', _$proteins);
+  static int _$kcal(FoodEntity v) => v.kcal;
+  static const Field<FoodEntity, int> _f$kcal = Field('kcal', _$kcal);
+  static int _$fats(FoodEntity v) => v.fats;
+  static const Field<FoodEntity, int> _f$fats = Field('fats', _$fats);
+  static int _$carbs(FoodEntity v) => v.carbs;
+  static const Field<FoodEntity, int> _f$carbs = Field('carbs', _$carbs);
 
   @override
   final MappableFields<FoodEntity> fields = const {
@@ -41,6 +50,10 @@ class FoodEntityMapper extends ClassMapperBase<FoodEntity> {
     #description: _f$description,
     #price: _f$price,
     #imageUrl: _f$imageUrl,
+    #proteins: _f$proteins,
+    #kcal: _f$kcal,
+    #fats: _f$fats,
+    #carbs: _f$carbs,
   };
 
   static FoodEntity _instantiate(DecodingData data) {
@@ -49,7 +62,11 @@ class FoodEntityMapper extends ClassMapperBase<FoodEntity> {
         name: data.dec(_f$name),
         description: data.dec(_f$description),
         price: data.dec(_f$price),
-        imageUrl: data.dec(_f$imageUrl));
+        imageUrl: data.dec(_f$imageUrl),
+        proteins: data.dec(_f$proteins),
+        kcal: data.dec(_f$kcal),
+        fats: data.dec(_f$fats),
+        carbs: data.dec(_f$carbs));
   }
 
   @override
@@ -109,7 +126,11 @@ abstract class FoodEntityCopyWith<$R, $In extends FoodEntity, $Out>
       String? name,
       String? description,
       double? price,
-      String? imageUrl});
+      String? imageUrl,
+      int? proteins,
+      int? kcal,
+      int? fats,
+      int? carbs});
   FoodEntityCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
 }
 
@@ -127,13 +148,21 @@ class _FoodEntityCopyWithImpl<$R, $Out>
           String? name,
           String? description,
           double? price,
-          String? imageUrl}) =>
+          String? imageUrl,
+          int? proteins,
+          int? kcal,
+          int? fats,
+          int? carbs}) =>
       $apply(FieldCopyWithData({
         if (id != null) #id: id,
         if (name != null) #name: name,
         if (description != null) #description: description,
         if (price != null) #price: price,
-        if (imageUrl != null) #imageUrl: imageUrl
+        if (imageUrl != null) #imageUrl: imageUrl,
+        if (proteins != null) #proteins: proteins,
+        if (kcal != null) #kcal: kcal,
+        if (fats != null) #fats: fats,
+        if (carbs != null) #carbs: carbs
       }));
   @override
   FoodEntity $make(CopyWithData data) => FoodEntity(
@@ -141,7 +170,11 @@ class _FoodEntityCopyWithImpl<$R, $Out>
       name: data.get(#name, or: $value.name),
       description: data.get(#description, or: $value.description),
       price: data.get(#price, or: $value.price),
-      imageUrl: data.get(#imageUrl, or: $value.imageUrl));
+      imageUrl: data.get(#imageUrl, or: $value.imageUrl),
+      proteins: data.get(#proteins, or: $value.proteins),
+      kcal: data.get(#kcal, or: $value.kcal),
+      fats: data.get(#fats, or: $value.fats),
+      carbs: data.get(#carbs, or: $value.carbs));
 
   @override
   FoodEntityCopyWith<$R2, FoodEntity, $Out2> $chain<$R2, $Out2>(

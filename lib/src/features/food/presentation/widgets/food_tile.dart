@@ -7,6 +7,7 @@ import 'package:restinio_app/src/core/di/dependencies_container.dart';
 import 'package:restinio_app/src/core/presentation/widgets/custom_button.dart';
 import 'package:restinio_app/src/core/services/app_cache_manager.dart';
 import 'package:restinio_app/src/features/food/domain/entities/food_entity.dart';
+import 'package:restinio_app/src/features/food/presentation/widgets/kcal_widget.dart';
 import 'package:restinio_app/src/features/food/presentation/widgets/price_widget.dart';
 
 class FoodTile extends StatelessWidget {
@@ -23,12 +24,12 @@ class FoodTile extends StatelessWidget {
         margin: const EdgeInsets.all(2),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(_radius),
-          gradient: const LinearGradient(
+          gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              Colors.white,
-              Color(0xffFAFAFA),
+              AppColors.secondarySurface.withOpacity(0.4),
+              AppColors.secondarySurface,
             ],
           ),
         ),
@@ -84,6 +85,8 @@ class FoodTile extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
+                        const SizedBox(height: 4),
+                        KcalWidget(food.kcal),
                         const SizedBox(height: 4),
                         PriceWidget(food.price),
                       ],
