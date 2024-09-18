@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:restinio_app/src/core/async_bloc_builder.dart';
 import 'package:restinio_app/src/core/constants/app_colors.dart';
+import 'package:restinio_app/src/core/navigation/app_router.dart';
 import 'package:restinio_app/src/core/presentation/widgets/custom_cached_network_image.dart';
 import 'package:restinio_app/src/features/food/domain/entities/food_entity.dart';
 import 'package:restinio_app/src/features/food/domain/repositories/food_repository.dart';
@@ -35,6 +36,11 @@ class FoodDetailsScreen extends StatelessWidget {
                   floating: false,
                   pinned: false,
                   snap: false,
+                  leading: IconButton.filled(
+                    onPressed: AppRouter.instance.pop,
+                    icon: const Icon(CupertinoIcons.back),
+                    padding: const EdgeInsets.only(right: 2),
+                  ),
                   stretch: true,
                   flexibleSpace: FlexibleSpaceBar(
                     centerTitle: false,
